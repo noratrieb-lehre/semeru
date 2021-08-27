@@ -1,0 +1,31 @@
+{
+  "test": {
+    "greeting": "hallo"
+  },
+  "root": {
+    "timerPage": "Timer",
+    "settingsPage": "Optionen",
+    "dataPage": "Statistiken",
+    "languages": {
+      "de": "Deutsch",
+      "en": "Englisch",
+      "title": "Deutsch"
+    }
+  },
+  "timer": {
+    "start": "Start",
+    "pause": "Pause",
+    "resume": "Weiter",
+    "stop": "Stopp",
+    "enterTaskName": "Tätigkeitsname eingeben:"
+  },
+  "settings": {
+    "quickTasks": "Schnelltasks",
+    "new": "Neu"
+  },
+  "data": {
+    "day": "Tag",
+    "week": "Woche",
+    "month": "Monat"
+  }
+}
