@@ -17,6 +17,7 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
     );
 
     const startHandler = (name?: string) => {
+        stopHandler();
         const task = store.start(name);
         setCurrentTask(task);
     };
@@ -59,7 +60,7 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
         }
         let name = task.name;
         if (!name) {
-            const input = window.prompt(local.timer.enterTaskName);
+            const input = window.prompt(local.timer.enterLastTaskName);
             if (!input) {
                 return;
             }
@@ -67,6 +68,11 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
         }
         const namedTask = { ...task, name };
         store.stop(namedTask);
+        setCurrentTask(null);
+    };
+
+    const cancelHandler = () => {
+        store.cancel();
         setCurrentTask(null);
     };
 
@@ -93,10 +99,11 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
                             {local.timer.pause}
                         </Button>
                     )}
-                </Col>
-                <Col>
-                    <Button variant="danger" onClick={() => stopHandler()}>
+                    <Button variant="danger" onClick={stopHandler}>
                         {local.timer.stop}
+                    </Button>
+                    <Button variant="danger" onClick={cancelHandler}>
+                        {local.timer.cancel}
                     </Button>
                 </Col>
             </Row>

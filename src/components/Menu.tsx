@@ -19,6 +19,9 @@ const Menu = ({ changeLocal }: MenuProps) => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
+                        <NavLink to="/" className="nav-link">
+                            {local.root.timerPage}
+                        </NavLink>
                         <NavLink to="/settings" className="nav-link">
                             {local.root.settingsPage}
                         </NavLink>

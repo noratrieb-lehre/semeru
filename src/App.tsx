@@ -6,6 +6,7 @@ import * as store from "./Store";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import TimerPage from "./components/TimerPage";
 import { QTask } from "./components/QuickTask";
+import Settings from "./components/Settings";
 
 type Local = typeof de;
 type LocalName = "en" | "de";
@@ -27,8 +28,7 @@ const App = () => {
         store.getQuickTasks()
     );
 
-    const addQuickTask = (task: QTask) => {
-        const tasks = [...quickTasks, task];
+    const setQuickTasksHandler = (tasks: QTask[]) => {
         store.setQuickTasks(tasks);
         setQuickTasks(tasks);
     };
@@ -43,6 +43,12 @@ const App = () => {
                 <LocalContext.Provider value={local}>
                     <Menu changeLocal={changeLocal} />
                     <Switch>
+                        <Route path="/settings">
+                            <Settings
+                                setQuickTasks={setQuickTasksHandler}
+                                quickTasks={quickTasks}
+                            />
+                        </Route>
                         <Route path="/">
                             <TimerPage quickTasks={quickTasks} />
                         </Route>

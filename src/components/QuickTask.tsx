@@ -9,7 +9,11 @@ interface QuickTaskProps {
 }
 
 const QuickTask = ({ name, handler }: QuickTaskProps) => {
-    return <Button variant="success">{name}</Button>;
+    return (
+        <Button onClick={handler} variant="success">
+            {name}
+        </Button>
+    );
 };
 
 export default QuickTask;

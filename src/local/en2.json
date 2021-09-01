@@ -17,11 +17,13 @@
     "pause": "Pause",
     "resume": "Resume",
     "stop": "Stop",
-    "enterTaskName": "Enter Task name:"
+    "cancel": "Cancel",
+    "enterLastTaskName": "Enter name for the last task:"
   },
   "settings": {
     "quickTasks": "Quick Tasks",
-    "new": "New"
+    "new": "New",
+    "newTaskMessage": "Enter task name"
   },
   "data": {
     "day": "Day",

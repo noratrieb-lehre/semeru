@@ -17,11 +17,13 @@
     "pause": "Pause",
     "resume": "Weiter",
     "stop": "Stopp",
-    "enterTaskName": "Tätigkeitsname eingeben:"
+    "cancel": "Abbrechen",
+    "enterLastTaskName": "Aufgabenname eingeben:"
   },
   "settings": {
     "quickTasks": "Schnelltasks",
-    "new": "Neu"
+    "new": "Neu",
+    "newTaskMessage": "Aufgabenname eingeben"
   },
   "data": {
     "day": "Tag",

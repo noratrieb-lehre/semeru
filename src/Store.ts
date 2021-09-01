@@ -49,6 +49,10 @@ export function stop({ start, name, breaks }: CurrentTaskWithName): Task {
     return newTask;
 }
 
+export function cancel() {
+    set("currentTask", null);
+}
+
 export function updateCurrentTask(task: CurrentTask | null) {
     set("currentTask", task);
 }
