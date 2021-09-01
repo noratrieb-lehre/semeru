@@ -30,5 +30,22 @@
     "week": "Woche",
     "month": "Monat",
     "all": "Alle"
+  },
+  "auth": {
+    "signIn": "Login",
+    "signUp": "Registrieren",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "passwordConfirm": "Passwort bestätigen",
+    "incorrectPassword": "Falsches Passwort",
+    "incorrectEmail": "Falsche E-Mail",
+    "passwordReq": "Passwort benötigt",
+    "emailReq": "E-Mail benötigt",
+    "notAnEmail": "Keine E-Mail Adresse",
+    "userNotFound": "E-Mail nicht gefunden",
+    "passwordMustMatch": "Passwörter müssen übereinstimmten",
+    "passwordLength": "Passwort muss mindestens 6 Zeichen lang sein",
+    "weakPassword": "Passwort zu schwach",
+    "emailAlreadyInUse": "Email bereits verwendet"
   }
 }
