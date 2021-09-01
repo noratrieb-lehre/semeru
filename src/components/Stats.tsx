@@ -1,14 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { LocaleContext } from "../App";
-import {
-    Button,
-    Col,
-    Container,
-    ListGroup,
-    ListGroupItem,
-    Row,
-} from "react-bootstrap";
-import * as store from "../Store";
+import { Button, Col, Container, ListGroup, ListGroupItem, Row } from "react-bootstrap";
+import * as store from "../store/LocalStore";
 import { TaskTimes, timeForTasksSince } from "../Task";
 
 type Time = "day" | "week" | "month" | "all";
@@ -20,9 +13,7 @@ const Stats = () => {
 
     const [groupedBy, setGroupedBy] = useState<Time>("day");
 
-    const [tasks, setTasks] = useState<TaskTimes>(() =>
-        timeForTasksSince(store.getTasks(), toTimestamp(groupedBy))
-    );
+    const [tasks, setTasks] = useState<TaskTimes>(() => timeForTasksSince(store.getTasks(), toTimestamp(groupedBy)));
 
     useEffect(() => {
         const newTasks = store.getTasks();
@@ -40,11 +31,7 @@ const Stats = () => {
                 {times.map((name) => (
                     <Col key={name}>
                         <Button
-                            variant={
-                                groupedBy === name
-                                    ? "secondary"
-                                    : "outline-secondary"
-                            }
+                            variant={groupedBy === name ? "secondary" : "outline-secondary"}
                             onClick={() => setGroupedBy(name)}
                         >
                             {locale.stats[name]}
@@ -103,11 +90,7 @@ function formatTimeText(time: number) {
         minutes = minutes % 60;
     }
 
-    return (
-        `${Math.floor(hours)}h ` +
-        `${Math.floor(minutes)}min ` +
-        `${Math.floor(seconds)}s`
-    );
+    return `${Math.floor(hours)}h ` + `${Math.floor(minutes)}min ` + `${Math.floor(seconds)}s`;
 }
 
 export default Stats;

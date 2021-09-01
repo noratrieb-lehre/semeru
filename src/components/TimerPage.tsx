@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { LocaleContext } from "../App";
 import { Button, Col, Row } from "react-bootstrap";
-import * as store from "../Store";
-import { updateCurrentTask } from "../Store";
+import * as store from "../store/LocalStore";
+import { updateCurrentTask } from "../store/LocalStore";
 import { CurrentTask, totalCurrentTaskTime } from "../Task";
 import QuickTask, { QTask } from "./QuickTask";
 
@@ -12,9 +12,7 @@ interface TimerPageProps {
 
 const TimerPage = ({ quickTasks }: TimerPageProps) => {
     const locale = useContext(LocaleContext);
-    const [task, setCurrentTask] = useState<CurrentTask | null>(
-        store.getCurrentTask
-    );
+    const [task, setCurrentTask] = useState<CurrentTask | null>(store.getCurrentTask);
 
     const startHandler = (name?: string) => {
         stopHandler();
@@ -110,11 +108,7 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
             <div className="m-3" />
             <Row>
                 {quickTasks.map((task) => (
-                    <QuickTask
-                        name={task}
-                        handler={() => startHandler(task)}
-                        key={task}
-                    />
+                    <QuickTask name={task} handler={() => startHandler(task)} key={task} />
                 ))}
             </Row>
         </Col>

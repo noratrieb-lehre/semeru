@@ -34,6 +34,7 @@
   "auth": {
     "signIn": "Sign In",
     "signUp": "Sign Up",
+    "signOut": "Sign Out",
     "email": "E-Mail",
     "password": "Password",
     "passwordConfirm": "Confirm Password",
@@ -46,6 +47,9 @@
     "passwordMustMatch": "Passwords must match",
     "passwordLength": "Password must be at least 6 characters",
     "weakPassword": "Password too weak",
-    "emailAlreadyInUse": "Email already in use"
+    "emailAlreadyInUse": "Email already in use",
+    "noAccountYet": "Don't have an account?",
+    "accountInfo": "You don't need an account to use SEMERU. But using an account will let you sync your timer and tasks across multiple different devices."
+
   }
 }

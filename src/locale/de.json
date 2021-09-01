@@ -34,6 +34,7 @@
   "auth": {
     "signIn": "Login",
     "signUp": "Registrieren",
+    "signOut": "Ausloggen",
     "email": "E-Mail",
     "password": "Passwort",
     "passwordConfirm": "Passwort bestätigen",
@@ -46,6 +47,8 @@
     "passwordMustMatch": "Passwörter müssen übereinstimmten",
     "passwordLength": "Passwort muss mindestens 6 Zeichen lang sein",
     "weakPassword": "Passwort zu schwach",
-    "emailAlreadyInUse": "Email bereits verwendet"
+    "emailAlreadyInUse": "Email bereits verwendet",
+    "noAccountYet": "Noch keinen Account?",
+    "accountInfo": "Es braucht keinen Account, um SEMERU nutzen zu können. Mit einem Account kann man jedoch den Timer und die Aufgaben über mehrere Geräte verknüpfen."
   }
 }

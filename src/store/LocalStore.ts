@@ -1,5 +1,5 @@
-import { CurrentTask, Task } from "./Task";
-import { QTask } from "./components/QuickTask";
+import { CurrentTask, Task } from "../Task";
+import { QTask } from "../components/QuickTask";
 
 type LocalStorageIndex = "tasks" | "currentTask" | "quickTasks";
 

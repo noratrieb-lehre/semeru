@@ -65,6 +65,7 @@ const SignUp = () => {
     return (
         <div>
             <h1>{locale.auth.signUp}</h1>
+            <p>{locale.auth.accountInfo}</p>
             <Form
                 onSubmit={(e) => {
                     e.preventDefault();

@@ -4,7 +4,7 @@ import { LocaleContext } from "../App";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import firebase from "firebase/compat";
-import { useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 interface FormValues {
     email: string;
@@ -98,6 +98,10 @@ const SignIn = () => {
                     {error}
                 </Alert>
             </Form>
+            <div>
+                <div>{locale.auth.noAccountYet}</div>
+                <NavLink to="/sign-up">{locale.auth.signUp}</NavLink>
+            </div>
         </div>
     );
 };
