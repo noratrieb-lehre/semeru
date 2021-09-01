@@ -1,29 +1,30 @@
 import React, { useState } from "react";
-import de from "./local/de.json";
-import en from "./local/en2.json";
+import de from "./locale/de.json";
+import en from "./locale/en2.json";
 import Menu from "./components/Menu";
 import * as store from "./Store";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import TimerPage from "./components/TimerPage";
 import { QTask } from "./components/QuickTask";
 import Settings from "./components/Settings";
+import Stats from "./components/Stats";
 
-type Local = typeof de;
-type LocalName = "en" | "de";
+type Locale = typeof de;
+type LocaleName = "en" | "de";
 
 type Locals = {
-    [name in LocalName]: Local;
+    [name in LocaleName]: Locale;
 };
 
-const locals: Locals = {
+const locales: Locals = {
     de,
     en,
 };
 
-const LocalContext = React.createContext(en);
+const LocaleContext = React.createContext(en);
 
 const App = () => {
-    const [local, setLocal] = useState<Local>(en);
+    const [local, setLocale] = useState<Locale>(en);
     const [quickTasks, setQuickTasks] = useState<QTask[]>(
         store.getQuickTasks()
     );
@@ -33,15 +34,15 @@ const App = () => {
         setQuickTasks(tasks);
     };
 
-    const changeLocal = (name: LocalName) => {
-        setLocal(locals[name]);
+    const changeLocale = (name: LocaleName) => {
+        setLocale(locales[name]);
     };
 
     return (
         <div>
             <BrowserRouter>
-                <LocalContext.Provider value={local}>
-                    <Menu changeLocal={changeLocal} />
+                <LocaleContext.Provider value={local}>
+                    <Menu changeLocale={changeLocale} />
                     <Switch>
                         <Route path="/settings">
                             <Settings
@@ -49,16 +50,19 @@ const App = () => {
                                 quickTasks={quickTasks}
                             />
                         </Route>
+                        <Route path="/stats">
+                            <Stats />
+                        </Route>
                         <Route path="/">
                             <TimerPage quickTasks={quickTasks} />
                         </Route>
                     </Switch>
-                </LocalContext.Provider>
+                </LocaleContext.Provider>
             </BrowserRouter>
         </div>
     );
 };
 
 export default App;
-export { LocalContext };
-export type { LocalName };
+export { LocaleContext };
+export type { LocaleName };

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import QuickTask, { QTask } from "./QuickTask";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import { LocalContext } from "../App";
+import { LocaleContext } from "../App";
 
 interface SettingsProps {
     quickTasks: QTask[];
@@ -9,10 +9,10 @@ interface SettingsProps {
 }
 
 const Settings = ({ quickTasks, setQuickTasks }: SettingsProps) => {
-    const local = useContext(LocalContext);
+    const locale = useContext(LocaleContext);
 
     const newQuickTask = () => {
-        const task = window.prompt(local.settings.newTaskMessage);
+        const task = window.prompt(locale.settings.newTaskMessage);
         if (!task) {
             return;
         }
@@ -25,7 +25,7 @@ const Settings = ({ quickTasks, setQuickTasks }: SettingsProps) => {
     return (
         <Container>
             <Row>
-                <h2>{local.settings.quickTasks}</h2>
+                <h2>{locale.settings.quickTasks}</h2>
                 {quickTasks.map((task, i) => (
                     <Row key={task}>
                         <Col xs={10}>
@@ -44,7 +44,7 @@ const Settings = ({ quickTasks, setQuickTasks }: SettingsProps) => {
                 <Row>
                     <Col>
                         <Button onClick={newQuickTask}>
-                            {local.settings.new}
+                            {locale.settings.new}
                         </Button>
                     </Col>
                 </Row>

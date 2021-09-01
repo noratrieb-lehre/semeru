@@ -1,7 +1,11 @@
-import { CurrentTask, Task } from "./Types";
+import { CurrentTask, Task } from "./Task";
 import { QTask } from "./components/QuickTask";
 
 type LocalStorageIndex = "tasks" | "currentTask" | "quickTasks";
+
+type TaskListener = (tasks: Task[]) => void;
+
+let listeners: TaskListener[] = [];
 
 function get<T>(name: LocalStorageIndex, defaultValue: T): T {
     const item = localStorage.getItem(name);
@@ -46,6 +50,8 @@ export function stop({ start, name, breaks }: CurrentTaskWithName): Task {
     set("tasks", tasks);
     set("currentTask", null);
 
+    listeners.forEach((l) => l(tasks));
+
     return newTask;
 }
 
@@ -74,4 +80,12 @@ export function getQuickTasks(): QTask[] {
 
 export function setQuickTasks(tasks: QTask[]) {
     set("quickTasks", tasks);
+}
+
+export function registerTaskListener(listener: TaskListener): number {
+    return listeners.push(listener) - 1;
+}
+
+export function removeTaskListener(listener: number) {
+    listeners.splice(listener, 1);
 }

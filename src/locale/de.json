@@ -25,9 +25,10 @@
     "new": "Neu",
     "newTaskMessage": "Aufgabenname eingeben"
   },
-  "data": {
+  "stats": {
     "day": "Tag",
     "week": "Woche",
-    "month": "Monat"
+    "month": "Monat",
+    "all": "Alle"
   }
 }

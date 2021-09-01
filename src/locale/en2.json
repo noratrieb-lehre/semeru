@@ -25,9 +25,10 @@
     "new": "New",
     "newTaskMessage": "Enter task name"
   },
-  "data": {
+  "stats": {
     "day": "Day",
     "week": "Week",
-    "month": "Month"
+    "month": "Month",
+    "all": "All"
   }
 }

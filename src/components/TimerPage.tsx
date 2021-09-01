@@ -1,17 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
-import { LocalContext } from "../App";
+import { LocaleContext } from "../App";
 import { Button, Col, Row } from "react-bootstrap";
 import * as store from "../Store";
-import { CurrentTask, totalCurrentTaskTime } from "../Types";
 import { updateCurrentTask } from "../Store";
+import { CurrentTask, totalCurrentTaskTime } from "../Task";
 import QuickTask, { QTask } from "./QuickTask";
+import { formatTime } from "../Helpers";
 
 interface TimerPageProps {
     quickTasks: QTask[];
 }
 
 const TimerPage = ({ quickTasks }: TimerPageProps) => {
-    const local = useContext(LocalContext);
+    const locale = useContext(LocaleContext);
     const [task, setCurrentTask] = useState<CurrentTask | null>(
         store.getCurrentTask
     );
@@ -60,7 +61,7 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
         }
         let name = task.name;
         if (!name) {
-            const input = window.prompt(local.timer.enterLastTaskName);
+            const input = window.prompt(locale.timer.enterLastTaskName);
             if (!input) {
                 return;
             }
@@ -80,7 +81,7 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
         <Col>
             <Row>
                 <Button variant="success" onClick={() => startHandler()}>
-                    {local.timer.start}
+                    {locale.timer.start}
                 </Button>
             </Row>
             <Row>
@@ -92,18 +93,18 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
                 <Col>
                     {task?.currentBreakStart ? (
                         <Button variant="info" onClick={resumeHandler}>
-                            {local.timer.resume}
+                            {locale.timer.resume}
                         </Button>
                     ) : (
                         <Button variant="info" onClick={pauseHandler}>
-                            {local.timer.pause}
+                            {locale.timer.pause}
                         </Button>
                     )}
                     <Button variant="danger" onClick={stopHandler}>
-                        {local.timer.stop}
+                        {locale.timer.stop}
                     </Button>
                     <Button variant="danger" onClick={cancelHandler}>
-                        {local.timer.cancel}
+                        {locale.timer.cancel}
                     </Button>
                 </Col>
             </Row>
@@ -147,22 +148,5 @@ const TimerInner = ({ task }: TimerProps) => {
 
     return <>{task ? formatTime(totalCurrentTaskTime(task)) : "00:00:00"}</>;
 };
-
-function formatTime(time: number): string {
-    time = time / 1000;
-    const seconds = time % 60;
-    let minutes = time / 60;
-    let hours = 0;
-    if (minutes > 60) {
-        hours = minutes / 60;
-        minutes = minutes % 60;
-    }
-
-    return (
-        `${Math.floor(hours).toString().padStart(2, "0")}:` +
-        `${Math.floor(minutes).toString().padStart(2, "0")}:` +
-        `${Math.floor(seconds).toString().padStart(2, "0")}`
-    );
-}
 
 export default TimerPage;

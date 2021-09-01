@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
-import { LocalContext, LocalName } from "../App";
+import { LocaleContext, LocaleName } from "../App";
 import { NavLink } from "react-router-dom";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 
 interface MenuProps {
-    changeLocal: (name: LocalName) => void;
+    changeLocale: (name: LocaleName) => void;
 }
 
-const Menu = ({ changeLocal }: MenuProps) => {
-    const local = useContext(LocalContext);
+const Menu = ({ changeLocale }: MenuProps) => {
+    const locale = useContext(LocaleContext);
 
     return (
         <Navbar collapseOnSelect expand="lg">
@@ -20,23 +20,27 @@ const Menu = ({ changeLocal }: MenuProps) => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
                         <NavLink to="/" className="nav-link">
-                            {local.root.timerPage}
+                            {locale.root.timerPage}
                         </NavLink>
                         <NavLink to="/settings" className="nav-link">
-                            {local.root.settingsPage}
+                            {locale.root.settingsPage}
                         </NavLink>
                         <NavLink to="/stats" className="nav-link">
-                            {local.root.dataPage}
+                            {locale.root.dataPage}
                         </NavLink>
                         <NavDropdown
-                            title={local.root.languages.title}
+                            title={locale.root.languages.title}
                             id="collasible-nav-dropdown"
                         >
-                            <NavDropdown.Item onClick={() => changeLocal("en")}>
-                                {local.root.languages.en}
+                            <NavDropdown.Item
+                                onClick={() => changeLocale("en")}
+                            >
+                                {locale.root.languages.en}
                             </NavDropdown.Item>
-                            <NavDropdown.Item onClick={() => changeLocal("de")}>
-                                {local.root.languages.de}
+                            <NavDropdown.Item
+                                onClick={() => changeLocale("de")}
+                            >
+                                {locale.root.languages.de}
                             </NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
