@@ -5,7 +5,6 @@ import * as store from "../Store";
 import { updateCurrentTask } from "../Store";
 import { CurrentTask, totalCurrentTaskTime } from "../Task";
 import QuickTask, { QTask } from "./QuickTask";
-import { formatTime } from "../Helpers";
 
 interface TimerPageProps {
     quickTasks: QTask[];
@@ -148,5 +147,22 @@ const TimerInner = ({ task }: TimerProps) => {
 
     return <>{task ? formatTime(totalCurrentTaskTime(task)) : "00:00:00"}</>;
 };
+
+function formatTime(time: number): string {
+    time = time / 1000;
+    const seconds = time % 60;
+    let minutes = time / 60;
+    let hours = 0;
+    if (minutes > 60) {
+        hours = minutes / 60;
+        minutes = minutes % 60;
+    }
+
+    return (
+        `${Math.floor(hours).toString().padStart(2, "0")}:` +
+        `${Math.floor(minutes).toString().padStart(2, "0")}:` +
+        `${Math.floor(seconds).toString().padStart(2, "0")}`
+    );
+}
 
 export default TimerPage;
