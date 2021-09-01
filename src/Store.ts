@@ -1,7 +1,7 @@
-import {CurrentTask, Task} from "./Types";
+import { CurrentTask, Task } from "./Types";
+import { QTask } from "./components/QuickTask";
 
-
-type LocalStorageIndex = "tasks" | "currentTask";
+type LocalStorageIndex = "tasks" | "currentTask" | "quickTasks";
 
 function get<T>(name: LocalStorageIndex, defaultValue: T): T {
     const item = localStorage.getItem(name);
@@ -20,26 +20,25 @@ export function getCurrentTask(): CurrentTask | null {
     return get("currentTask", null);
 }
 
-
 export function start(name?: string): CurrentTask {
     const task: CurrentTask = {
         name,
         start: Date.now(),
-        breaks: []
-    }
+        breaks: [],
+    };
     set("currentTask", task);
     return task;
 }
 
 type CurrentTaskWithName = CurrentTask & { name: string };
 
-export function stop({start, name, breaks}: CurrentTaskWithName): Task {
+export function stop({ start, name, breaks }: CurrentTaskWithName): Task {
     const end = Date.now();
     const newTask: Task = {
         start,
         end,
         breaks,
-        name
+        name,
     };
 
     const tasks = get<Task[]>("tasks", []);
@@ -63,4 +62,12 @@ export function getTasks(predicate?: TaskPredicate): Task[] {
         tasks = tasks.filter(predicate);
     }
     return tasks;
+}
+
+export function getQuickTasks(): QTask[] {
+    return get("quickTasks", []);
+}
+
+export function setQuickTasks(tasks: QTask[]) {
+    set("quickTasks", tasks);
 }
