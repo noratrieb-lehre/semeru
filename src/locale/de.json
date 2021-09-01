@@ -18,7 +18,7 @@
     "resume": "Weiter",
     "stop": "Stopp",
     "cancel": "Abbrechen",
-    "enterLastTaskName": "Aufgabenname eingeben:"
+    "enterLastTaskName": "Name der letzten Aufgabe eingeben:"
   },
   "settings": {
     "quickTasks": "Schnelltasks",
