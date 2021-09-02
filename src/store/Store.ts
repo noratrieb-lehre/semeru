@@ -15,6 +15,8 @@ export default abstract class Store {
 
     public abstract removeTaskListener(listener: TaskListener): Promise<void>;
 
+    public abstract removeQuickTask(id: string): Promise<void>;
+
     public async getCurrentTask(): Promise<CurrentTask | null> {
         return this.get("currentTask", null);
     }
@@ -57,10 +59,6 @@ export default abstract class Store {
 
     public getQuickTasks(): Promise<Collection<QTask>> {
         return this.get("quickTasks", {});
-    }
-
-    public async removeQuickTask(id: string) {
-        console.log("removed quicktask... unless?");
     }
 
     public async addQuickTask(task: QTask) {

@@ -1,5 +1,6 @@
 import { Collection, Task } from "../Task";
 import Store, { CurrentTaskWithName, PropertyName, TaskListener } from "./Store";
+import { QTask } from "../components/QuickTask";
 
 export default class LocalStore extends Store {
     listeners: TaskListener[] = [];
@@ -41,5 +42,11 @@ export default class LocalStore extends Store {
         const values = await this.get<Collection<T>>(name, {});
         values[id] = value;
         await this.set(name, values);
+    }
+
+    public async removeQuickTask(id: string): Promise<void> {
+        const tasks = await this.get<Collection<QTask>>("quickTasks", {});
+        delete tasks[id];
+        await this.set("quickTasks", tasks);
     }
 }

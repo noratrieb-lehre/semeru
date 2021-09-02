@@ -47,4 +47,8 @@ export default class CloudStore extends Store {
     protected async push<T>(name: PropertyName, value: T): Promise<void> {
         await firebase.database().ref(`users/${this._user.uid}/${name}`).push(value);
     }
+
+    public async removeQuickTask(id: string): Promise<void> {
+        await firebase.database().ref(`users/${this._user.uid}/quickTasks/${id}`).set(null);
+    }
 }
