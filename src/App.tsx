@@ -59,9 +59,10 @@ const App = () => {
         });
     }, []);
 
-    const addQuickTaskHandler = (task: QTask) => {
-        store.addQuickTask(task).then();
-        setQuickTasks((old) => ({ ...old, task }));
+    const addQuickTaskHandler = async (task: QTask) => {
+        await store.addQuickTask(task);
+        const newTasks = await store.getQuickTasks();
+        setQuickTasks(newTasks);
     };
 
     const removeQuickTaskHandler = (id: string) => {
