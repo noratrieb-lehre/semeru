@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { LocaleContext, StoreContext } from "../App";
 import { Button, Col, Container, ListGroup, ListGroupItem, Row } from "react-bootstrap";
-import { collectionToArray, TaskTimes, timeForTasksSince, withBreaksArray } from "../Task";
-import { TaskListener } from "../store/Store";
+import { Collection, collectionToArray, Task, TaskTimes, timeForTasksSince, withBreaksArray } from "../Task";
 
 type Time = "day" | "week" | "month" | "all";
 
@@ -17,12 +16,11 @@ const Stats = () => {
     const [tasks, setTasks] = useState<TaskTimes>([]);
 
     useEffect(() => {
-        const listener: TaskListener = (newTasks) =>
+        const listener = (newTasks: Collection<Task>) =>
             setTasks(timeForTasksSince(withBreaksArray(collectionToArray(newTasks)), toTimestamp(groupedBy)));
+        store.getTasks(listener).then();
 
-        store.registerTaskListener(listener).then();
-
-        return () => void store.removeTaskListener(listener).then();
+        return () => void store.removeListener(listener).then();
     }, [store, groupedBy]);
 
     return (

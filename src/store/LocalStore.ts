@@ -1,30 +1,11 @@
-import { Collection, Task } from "../Task";
-import Store, { CurrentTaskWithName, PropertyName, TaskListener } from "./Store";
+import { Collection } from "../Task";
+import Store, { Listener, PropertyName } from "./Store";
 import { QTask } from "../components/QuickTask";
 
 export default class LocalStore extends Store {
-    listeners: TaskListener[] = [];
+    _listeners: Array<{ value: PropertyName; listener: Listener<any>; defaultValue: any }> = [];
 
-    public async stop({ start, name, breaks }: CurrentTaskWithName): Promise<Task> {
-        const newTask = await super.stop({ start, name, breaks });
-        // this is not strictly needed, because we already get all tasks in super.stop, but get is fast enough to not care about it
-        const tasks = await this.get<Collection<Task>>("tasks", {});
-
-        this.listeners.forEach((l) => l(tasks));
-
-        return newTask;
-    }
-
-    public async registerTaskListener(listener: TaskListener) {
-        this.listeners.push(listener);
-        listener(await this.getTasks());
-    }
-
-    public async removeTaskListener(listener: TaskListener) {
-        this.listeners = this.listeners.filter((l) => !Object.is(listener, l));
-    }
-
-    async get<T>(name: PropertyName, defaultValue: T): Promise<T> {
+    async getSingle<T>(name: PropertyName, defaultValue: T): Promise<T> {
         const item = localStorage.getItem(name);
         if (!item) {
             return defaultValue;
@@ -35,18 +16,30 @@ export default class LocalStore extends Store {
     async set<T>(name: PropertyName, value: T) {
         const string = JSON.stringify(value);
         localStorage.setItem(name, string);
+        this._listeners
+            .filter(({ value }) => value === name)
+            .forEach(({ listener, defaultValue }) => listener(value || defaultValue));
+    }
+
+    public async removeQuickTask(id: string): Promise<void> {
+        const tasks = await this.getSingle<Collection<QTask>>("quickTasks", {});
+        delete tasks[id];
+        await this.set("quickTasks", tasks);
+    }
+
+    public async removeListener(toRemove: Listener<any>): Promise<void> {
+        this._listeners = this._listeners.filter(({ listener }) => listener !== toRemove);
     }
 
     protected async push<T>(name: PropertyName, value: T): Promise<void> {
         const id = `id${Date.now()}_${Math.floor(Math.random() * 100)}`; // very very cool id
-        const values = await this.get<Collection<T>>(name, {});
+        const values = await this.getSingle<Collection<T>>(name, {});
         values[id] = value;
         await this.set(name, values);
     }
 
-    public async removeQuickTask(id: string): Promise<void> {
-        const tasks = await this.get<Collection<QTask>>("quickTasks", {});
-        delete tasks[id];
-        await this.set("quickTasks", tasks);
+    protected async get<T>(value: PropertyName, defaultValue: T, listener: Listener<T>): Promise<void> {
+        this._listeners.push({ value, listener, defaultValue });
+        listener(await this.getSingle(value, defaultValue));
     }
 }

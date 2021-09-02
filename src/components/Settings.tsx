@@ -25,7 +25,7 @@ const Settings = ({ quickTasks, addQuickTaskHandler, removeQuickTaskHandler }: S
         <Container>
             <Row>
                 <h2>{locale.settings.quickTasks}</h2>
-                {Object.entries(quickTasks).map(([id, task], i) => (
+                {Object.entries(quickTasks).map(([id, task]) => (
                     <Row key={id}>
                         <Col xs={10}>
                             <QuickTask name={task} handler={() => {}} />

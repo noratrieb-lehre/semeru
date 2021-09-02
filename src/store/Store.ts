@@ -2,36 +2,22 @@ import { Collection, CurrentTask, Task } from "../Task";
 import { QTask } from "../components/QuickTask";
 import { LocaleName } from "../App";
 
-export type TaskListener = (tasks: Collection<Task>) => void;
+export type Listener<T> = (values: T) => void;
+
 export type CurrentTaskWithName = CurrentTask & { name: string };
 export type PropertyName = "tasks" | "currentTask" | "quickTasks" | "locale";
 
 export default abstract class Store {
-    /**
-     * Adds a new listener to the tasks
-     * Gets triggered immediately after registering and on every new change later
-     */
-    public abstract registerTaskListener(listener: TaskListener): Promise<void>;
-
-    public abstract removeTaskListener(listener: TaskListener): Promise<void>;
-
-    public abstract removeQuickTask(id: string): Promise<void>;
-
-    public async getCurrentTask(): Promise<CurrentTask | null> {
-        return this.get("currentTask", null);
-    }
-
-    public async start(name?: string): Promise<CurrentTask> {
+    public async start(name?: string): Promise<void> {
         const task: CurrentTask = {
             name: name || null, // firebase does not like undefined
             start: Date.now(),
             breaks: [],
         };
         await this.set("currentTask", task);
-        return task;
     }
 
-    public async stop({ start, name, breaks }: CurrentTaskWithName): Promise<Task> {
+    public async stop({ start, name, breaks }: CurrentTaskWithName): Promise<void> {
         const end = Date.now();
         const newTask: Task = {
             start,
@@ -41,8 +27,6 @@ export default abstract class Store {
         };
 
         await Promise.all([this.push("tasks", newTask), this.set("currentTask", null)]);
-
-        return newTask;
     }
 
     public async cancel() {
@@ -53,27 +37,35 @@ export default abstract class Store {
         await this.set("currentTask", task);
     }
 
-    public async getTasks(): Promise<Collection<Task>> {
-        return await this.get<Collection<Task>>("tasks", {});
-    }
-
-    public getQuickTasks(): Promise<Collection<QTask>> {
-        return this.get("quickTasks", {});
+    public async setLocale(name: LocaleName) {
+        await this.set("locale", name);
     }
 
     public async addQuickTask(task: QTask) {
         await this.push("quickTasks", task);
     }
 
-    public async setLocale(name: LocaleName) {
-        await this.set("locale", name);
+    public getTasks(listener: Listener<Collection<Task>>): Promise<void> {
+        return this.get("tasks", {}, listener);
     }
 
-    public getLocale(): Promise<LocaleName> {
-        return this.get("locale", "en");
+    public getQuickTasks(listener: Listener<Collection<QTask>>): Promise<void> {
+        return this.get("quickTasks", {}, listener);
     }
 
-    protected abstract get<T>(name: PropertyName, defaultValue: T): Promise<T>;
+    public getLocale(listener: Listener<LocaleName>): Promise<void> {
+        return this.get("locale", "en", listener);
+    }
+
+    public getCurrentTask(listener: Listener<CurrentTask | null>): Promise<void> {
+        return this.get("currentTask", null, listener);
+    }
+
+    public abstract removeQuickTask(id: string): Promise<void>;
+
+    public abstract removeListener(listener: Listener<any>): Promise<void>;
+
+    protected abstract get<T>(name: PropertyName, defaultValue: T, listener: Listener<T>): Promise<void>;
 
     protected abstract set<T>(name: PropertyName, value: T): Promise<void>;
 

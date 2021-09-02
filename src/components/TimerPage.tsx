@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { LocaleContext, StoreContext } from "../App";
 import { Button, Col, Row } from "react-bootstrap";
-import { Collection, collectionToArray, CurrentTaskWB, totalCurrentTaskTime, withBreaks } from "../Task";
+import { Collection, collectionToArray, CurrentTask, CurrentTaskWB, totalCurrentTaskTime, withBreaks } from "../Task";
 import QuickTask, { QTask } from "./QuickTask";
 
 interface TimerPageProps {
@@ -14,49 +14,43 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
     const [task, setCurrentTask] = useState<CurrentTaskWB | null>(null);
 
     useEffect(() => {
-        store.getCurrentTask().then((r) => {
-            setCurrentTask(r ? withBreaks(r) : null);
-        });
+        const listener = (newTask: CurrentTask | null) => setCurrentTask(newTask ? withBreaks(newTask) : null);
+        store.getCurrentTask(listener).then();
+
+        return () => void store.removeListener(listener);
     }, [store]);
 
     const quickTaskArray = useMemo(() => collectionToArray(quickTasks), [quickTasks]);
 
     const startHandler = async (name?: string) => {
         await stopHandler();
-        const task = await store.start(name);
-        setCurrentTask(withBreaks(task));
+        await store.start(name);
     };
 
     const pauseHandler = () => {
-        setCurrentTask((task) => {
-            const next = task && {
-                ...task,
-                currentBreakStart: Date.now(),
-            };
-            store.updateCurrentTask(next).then();
-            return next;
-        });
+        const next = task && {
+            ...task,
+            currentBreakStart: Date.now(),
+        };
+        store.updateCurrentTask(next).then();
     };
 
     const resumeHandler = () => {
-        setCurrentTask((task) => {
-            if (!task?.currentBreakStart) {
-                return task;
-            }
-            const next = task && {
-                start: task.start,
-                name: task.name,
-                breaks: [
-                    ...task.breaks,
-                    {
-                        start: task.currentBreakStart,
-                        end: Date.now(),
-                    },
-                ],
-            };
-            store.updateCurrentTask(next).then();
-            return next;
-        });
+        if (!task?.currentBreakStart) {
+            return task;
+        }
+        const next = task && {
+            start: task.start,
+            name: task.name,
+            breaks: [
+                ...task.breaks,
+                {
+                    start: task.currentBreakStart,
+                    end: Date.now(),
+                },
+            ],
+        };
+        store.updateCurrentTask(next).then();
     };
 
     const stopHandler = async () => {
@@ -72,12 +66,10 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
             name = input;
         }
         const namedTask = { ...task, name };
-        setCurrentTask(null);
         await store.stop(namedTask);
     };
 
     const cancelHandler = async () => {
-        setCurrentTask(null);
         await store.cancel();
     };
 

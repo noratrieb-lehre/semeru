@@ -41,11 +41,17 @@ const App = () => {
     const [user, setUser] = useState<firebase.User | null>(null);
 
     useEffect(() => {
-        store.getLocale().then((locale) => setLocale(locales[locale]));
+        const listener = (locale: LocaleName) => setLocale(locales[locale]);
+        store.getLocale(listener).then();
+
+        return () => void store.removeListener(listener);
     }, [store]);
 
     useEffect(() => {
-        store.getQuickTasks().then((qTasks) => setQuickTasks(qTasks));
+        const listener = (qTasks: Collection<QTask>) => setQuickTasks(qTasks);
+        store.getQuickTasks(listener).then();
+
+        return () => void store.removeListener(listener);
     }, [store]);
 
     useEffect(() => {
@@ -61,21 +67,14 @@ const App = () => {
 
     const addQuickTaskHandler = async (task: QTask) => {
         await store.addQuickTask(task);
-        const newTasks = await store.getQuickTasks();
-        setQuickTasks(newTasks);
+        // it is going to get displayed automatically thanks to the listener above, just like the 2 below
     };
 
     const removeQuickTaskHandler = (id: string) => {
         store.removeQuickTask(id).then();
-        setQuickTasks((old) => {
-            const newObj = { ...old };
-            delete newObj[id];
-            return newObj;
-        });
     };
 
     const changeLocale = (name: LocaleName) => {
-        setLocale(locales[name]);
         store.setLocale(name).then();
     };
 
