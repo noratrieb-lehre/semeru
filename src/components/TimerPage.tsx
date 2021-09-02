@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { LocaleContext } from "../App";
+import { LocaleContext, StoreContext } from "../App";
 import { Button, Col, Row } from "react-bootstrap";
-import * as store from "../store/LocalStore";
-import { updateCurrentTask } from "../store/LocalStore";
 import { CurrentTask, totalCurrentTaskTime } from "../Task";
 import QuickTask, { QTask } from "./QuickTask";
 
@@ -12,11 +10,18 @@ interface TimerPageProps {
 
 const TimerPage = ({ quickTasks }: TimerPageProps) => {
     const locale = useContext(LocaleContext);
-    const [task, setCurrentTask] = useState<CurrentTask | null>(store.getCurrentTask);
+    const store = useContext(StoreContext);
+    const [task, setCurrentTask] = useState<CurrentTask | null>(null);
 
-    const startHandler = (name?: string) => {
-        stopHandler();
-        const task = store.start(name);
+    useEffect(() => {
+        store.getCurrentTask().then((r) => {
+            setCurrentTask(r);
+        });
+    }, [store]);
+
+    const startHandler = async (name?: string) => {
+        await stopHandler();
+        const task = await store.start(name);
         setCurrentTask(task);
     };
 
@@ -26,7 +31,7 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
                 ...task,
                 currentBreakStart: Date.now(),
             };
-            store.updateCurrentTask(next);
+            store.updateCurrentTask(next).then();
             return next;
         });
     };
@@ -47,12 +52,12 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
                     },
                 ],
             };
-            updateCurrentTask(next);
+            store.updateCurrentTask(next).then();
             return next;
         });
     };
 
-    const stopHandler = () => {
+    const stopHandler = async () => {
         if (!task) {
             return;
         }
@@ -65,13 +70,13 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
             name = input;
         }
         const namedTask = { ...task, name };
-        store.stop(namedTask);
         setCurrentTask(null);
+        await store.stop(namedTask);
     };
 
-    const cancelHandler = () => {
-        store.cancel();
+    const cancelHandler = async () => {
         setCurrentTask(null);
+        await store.cancel();
     };
 
     return (

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { LocaleContext } from "../App";
+import { LocaleContext, StoreContext } from "../App";
 import { Button, Col, Container, ListGroup, ListGroupItem, Row } from "react-bootstrap";
-import * as store from "../store/LocalStore";
 import { TaskTimes, timeForTasksSince } from "../Task";
+import { TaskListener } from "../store/Store";
 
 type Time = "day" | "week" | "month" | "all";
 
@@ -10,20 +10,24 @@ const times: Time[] = ["day", "week", "month", "all"];
 
 const Stats = () => {
     const locale = useContext(LocaleContext);
+    const store = useContext(StoreContext);
 
     const [groupedBy, setGroupedBy] = useState<Time>("day");
 
-    const [tasks, setTasks] = useState<TaskTimes>(() => timeForTasksSince(store.getTasks(), toTimestamp(groupedBy)));
+    const [tasks, setTasks] = useState<TaskTimes>([]);
 
     useEffect(() => {
-        const newTasks = store.getTasks();
-        setTasks(timeForTasksSince(newTasks, toTimestamp(groupedBy)));
-        const i = store.registerTaskListener((newTasks) =>
-            setTasks(timeForTasksSince(newTasks, toTimestamp(groupedBy)))
-        );
+        const listener: TaskListener = (newTasks) => setTasks(timeForTasksSince(newTasks, toTimestamp(groupedBy)));
 
-        return () => store.removeTaskListener(i);
-    }, [groupedBy, setTasks]);
+        console.log("listener may be broken i guess");
+        store.getTasks().then((newTasks) => {
+            const taskTimes = timeForTasksSince(newTasks, toTimestamp(groupedBy));
+            setTasks(taskTimes);
+            return store.registerTaskListener(listener);
+        });
+
+        return () => void store.removeTaskListener(listener).then();
+    }, [store, groupedBy]);
 
     return (
         <Container>
@@ -90,7 +94,7 @@ function formatTimeText(time: number) {
         minutes = minutes % 60;
     }
 
-    return `${Math.floor(hours)}h ` + `${Math.floor(minutes)}min ` + `${Math.floor(seconds)}s`;
+    return `${Math.floor(hours)}h ${Math.floor(minutes)}min ${Math.floor(seconds)}s`;
 }
 
 export default Stats;
