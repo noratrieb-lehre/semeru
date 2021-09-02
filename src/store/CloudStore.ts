@@ -1,5 +1,6 @@
 import Store, { PropertyName, TaskListener } from "./Store";
 import firebase from "firebase/compat";
+import { CurrentTask } from "../Task";
 
 type FirebaseListener = (a: firebase.database.DataSnapshot, b?: string | null) => any;
 
@@ -12,35 +13,38 @@ export default class CloudStore extends Store {
 
     constructor(user: firebase.User) {
         super();
-        console.log("create CloudStore");
         this._user = user;
         this._listenerMap = new Map();
     }
 
+    public getCurrentTask(): Promise<CurrentTask | null> {
+        return this.get("currentTask", null);
+    }
+
     async registerTaskListener(listener: TaskListener) {
-        console.log("add firebase listener");
-        const firebaseListener: FirebaseListener = (snapshot) => listener(snapshot.val());
+        const firebaseListener: FirebaseListener = (snapshot) => listener(snapshot.val() || []);
         this._listenerMap.set(listener, firebaseListener);
-        firebase.database().ref(`users/${this._user.uid}/tasks`).on("value", firebaseListener);
+        await firebase.database().ref(`users/${this._user.uid}/tasks`).on("value", firebaseListener);
     }
 
     async removeTaskListener(listener: TaskListener) {
-        console.log("remove firebase listener");
         const firebaseListener = this._listenerMap.get(listener);
-        firebase.database().ref(`users/${this._user.uid}/tasks`).off("value", firebaseListener);
+        await firebase.database().ref(`users/${this._user.uid}/tasks`).off("value", firebaseListener);
     }
 
-    protected async set<T>(name: PropertyName, value: T): Promise<void> {
-        console.log("set firebase value", name);
+    protected set<T>(name: PropertyName, value: T): Promise<void> {
         return firebase.database().ref(`users/${this._user.uid}/${name}`).set(value);
     }
 
-    protected async get<T>(name: PropertyName, defaultValue: T): Promise<T> {
-        console.log("get firebase value", name);
+    protected get<T>(name: PropertyName, defaultValue: T): Promise<T> {
         return firebase
             .database()
             .ref(`users/${this._user.uid}/${name}`)
             .get()
             .then((value) => value.val() || defaultValue);
+    }
+
+    protected async push<T>(name: PropertyName, value: T): Promise<void> {
+        await firebase.database().ref(`users/${this._user.uid}/${name}`).push(value);
     }
 }

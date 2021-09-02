@@ -2,13 +2,15 @@ import React, { useContext } from "react";
 import QuickTask, { QTask } from "./QuickTask";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { LocaleContext } from "../App";
+import { Collection } from "../Task";
 
 interface SettingsProps {
-    quickTasks: QTask[];
-    setQuickTasks: (task: QTask[]) => void;
+    quickTasks: Collection<QTask>;
+    addQuickTaskHandler: (task: QTask) => void;
+    removeQuickTaskHandler: (id: string) => void;
 }
 
-const Settings = ({ quickTasks, setQuickTasks }: SettingsProps) => {
+const Settings = ({ quickTasks, addQuickTaskHandler, removeQuickTaskHandler }: SettingsProps) => {
     const locale = useContext(LocaleContext);
 
     const newQuickTask = () => {
@@ -16,26 +18,20 @@ const Settings = ({ quickTasks, setQuickTasks }: SettingsProps) => {
         if (!task) {
             return;
         }
-        setQuickTasks([...quickTasks, task]);
-    };
-    const removeQuickTask = (index: number) => {
-        setQuickTasks(quickTasks.filter((_, i) => i !== index));
+        addQuickTaskHandler(task);
     };
 
     return (
         <Container>
             <Row>
                 <h2>{locale.settings.quickTasks}</h2>
-                {quickTasks.map((task, i) => (
-                    <Row key={task}>
+                {Object.entries(quickTasks).map(([id, task], i) => (
+                    <Row key={id}>
                         <Col xs={10}>
                             <QuickTask name={task} handler={() => {}} />
                         </Col>
                         <Col xs={2}>
-                            <Button
-                                onClick={() => removeQuickTask(i)}
-                                variant="danger"
-                            >
+                            <Button onClick={() => removeQuickTaskHandler(id)} variant="danger">
                                 X
                             </Button>
                         </Col>
@@ -43,9 +39,7 @@ const Settings = ({ quickTasks, setQuickTasks }: SettingsProps) => {
                 ))}
                 <Row>
                     <Col>
-                        <Button onClick={newQuickTask}>
-                            {locale.settings.new}
-                        </Button>
+                        <Button onClick={newQuickTask}>{locale.settings.new}</Button>
                     </Col>
                 </Row>
             </Row>

@@ -14,6 +14,7 @@ import CloudStore from "./store/CloudStore";
 
 import de from "./locale/de.json";
 import en from "./locale/en2.json";
+import { Collection } from "./Task";
 
 type Locale = typeof de;
 type LocaleName = "en" | "de";
@@ -36,8 +37,12 @@ const StoreContext = React.createContext<Store>(globalLocalStore);
 const App = () => {
     const [locale, setLocale] = useState<Locale>(en);
     const [store, setStore] = useState<Store>(globalLocalStore);
-    const [quickTasks, setQuickTasks] = useState<QTask[]>([]);
+    const [quickTasks, setQuickTasks] = useState<Collection<QTask>>({});
     const [user, setUser] = useState<firebase.User | null>(null);
+
+    useEffect(() => {
+        store.getLocale().then((locale) => setLocale(locales[locale]));
+    }, [store]);
 
     useEffect(() => {
         store.getQuickTasks().then((qTasks) => setQuickTasks(qTasks));
@@ -54,13 +59,23 @@ const App = () => {
         });
     }, []);
 
-    const setQuickTasksHandler = (tasks: QTask[]) => {
-        store.setQuickTasks(tasks).then();
-        setQuickTasks(tasks);
+    const addQuickTaskHandler = (task: QTask) => {
+        store.addQuickTask(task).then();
+        setQuickTasks((old) => ({ ...old, task }));
+    };
+
+    const removeQuickTaskHandler = (id: string) => {
+        store.removeQuickTask(id).then();
+        setQuickTasks((old) => {
+            const newObj = { ...old };
+            delete newObj[id];
+            return newObj;
+        });
     };
 
     const changeLocale = (name: LocaleName) => {
         setLocale(locales[name]);
+        store.setLocale(name).then();
     };
 
     return (
@@ -72,7 +87,11 @@ const App = () => {
                             <Menu changeLocale={changeLocale} />
                             <Switch>
                                 <Route path="/settings">
-                                    <Settings setQuickTasks={setQuickTasksHandler} quickTasks={quickTasks} />
+                                    <Settings
+                                        removeQuickTaskHandler={removeQuickTaskHandler}
+                                        addQuickTaskHandler={addQuickTaskHandler}
+                                        quickTasks={quickTasks}
+                                    />
                                 </Route>
                                 <Route path="/stats">
                                     <Stats />

@@ -1,26 +1,49 @@
+export type Collection<T> = {
+    [id: string]: T;
+};
+
 export interface Task {
     start: number;
     name: string;
     end: number;
-    breaks: Array<{ start: number; end: number }>;
+    breaks?: Breaks;
 }
 
 export interface CurrentTask {
     start: number;
-    name?: string;
-    breaks: Array<{ start: number; end: number }>;
+    name: string | null;
+    breaks?: Breaks;
     currentBreakStart?: number;
 }
 
-export function totalCurrentTaskTime(task: CurrentTask): number {
-    const breaks = task.breaks
-        .map((br) => br.end - br.start)
-        .reduce((a, b) => a + b, 0);
+export type Breaks = Array<{ start: number; end: number }>;
+
+type WithBreaks<T> = T & { breaks: Breaks };
+
+export type CurrentTaskWB = WithBreaks<CurrentTask>;
+export type TaskWB = WithBreaks<Task>;
+
+export function withBreaks<T>(value: T): WithBreaks<T> {
+    return {
+        breaks: [],
+        ...value,
+    };
+}
+
+export function withBreaksArray<T>(array: T[]): Array<WithBreaks<T>> {
+    return array.map((value) => ({
+        breaks: [],
+        ...value,
+    }));
+}
+
+export function totalCurrentTaskTime(task: CurrentTaskWB): number {
+    const breaks = task.breaks.map((br) => br.end - br.start).reduce((a, b) => a + b, 0);
     const endTime = task.currentBreakStart || Date.now();
     return endTime - task.start - breaks;
 }
 
-export function totalTaskTime(task: Task): number {
+export function totalTaskTime(task: TaskWB): number {
     const breaks = task.breaks.map((br) => br.end - br.start).reduce(add, 0);
     return task.end - task.start - breaks;
 }
@@ -32,14 +55,19 @@ export interface TaskTime {
 
 export type TaskTimes = TaskTime[];
 
-export function timeForTasksSince(tasks: Task[], timeSince: number): TaskTimes {
+export function collectionToArray<T>(collection: Collection<T>): T[] {
+    return Object.values(collection);
+}
+
+export function timeForTasksSince(tasks: Array<TaskWB>, timeSince: number): TaskTimes {
     interface TaskTimesObj {
         [name: string]: TaskTime;
     }
 
     const results: TaskTimesObj = {};
     tasks
-        .map((task) => ({ ...task, start: Math.max(task.start, timeSince) })) // only count the time that was actually spent in the requested timeframe
+        // only count the time that was actually spent in the requested timeframe
+        .map((task) => ({ ...task, start: Math.max(task.start, timeSince) }))
         .filter((task) => task.end > timeSince)
         .forEach((task) => {
             results[task.name] = results[task.name] ?? {

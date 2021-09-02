@@ -1,6 +1,7 @@
 {
   "apiKey": "AIzaSyCCu8thmlZuqNG2MhJjnCloW5sO_7C83g4",
   "authDomain": "semeru-242a3.firebaseapp.com",
+  "databaseURL": "https://semeru-242a3-default-rtdb.europe-west1.firebasedatabase.app",
   "projectId": "semeru-242a3",
   "storageBucket": "semeru-242a3.appspot.com",
   "messagingSenderId": "670943232847",

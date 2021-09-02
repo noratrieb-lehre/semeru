@@ -1,28 +1,30 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { LocaleContext, StoreContext } from "../App";
 import { Button, Col, Row } from "react-bootstrap";
-import { CurrentTask, totalCurrentTaskTime } from "../Task";
+import { Collection, collectionToArray, CurrentTaskWB, totalCurrentTaskTime, withBreaks } from "../Task";
 import QuickTask, { QTask } from "./QuickTask";
 
 interface TimerPageProps {
-    quickTasks: QTask[];
+    quickTasks: Collection<QTask>;
 }
 
 const TimerPage = ({ quickTasks }: TimerPageProps) => {
     const locale = useContext(LocaleContext);
     const store = useContext(StoreContext);
-    const [task, setCurrentTask] = useState<CurrentTask | null>(null);
+    const [task, setCurrentTask] = useState<CurrentTaskWB | null>(null);
 
     useEffect(() => {
         store.getCurrentTask().then((r) => {
-            setCurrentTask(r);
+            setCurrentTask(r ? withBreaks(r) : null);
         });
     }, [store]);
+
+    const quickTaskArray = useMemo(() => collectionToArray(quickTasks), [quickTasks]);
 
     const startHandler = async (name?: string) => {
         await stopHandler();
         const task = await store.start(name);
-        setCurrentTask(task);
+        setCurrentTask(withBreaks(task));
     };
 
     const pauseHandler = () => {
@@ -112,7 +114,7 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
             </Row>
             <div className="m-3" />
             <Row>
-                {quickTasks.map((task) => (
+                {quickTaskArray.map((task) => (
                     <QuickTask name={task} handler={() => startHandler(task)} key={task} />
                 ))}
             </Row>
@@ -121,7 +123,7 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
 };
 
 interface TimerProps {
-    task: CurrentTask | null;
+    task: CurrentTaskWB | null;
 }
 
 const Timer = (props: TimerProps) => {

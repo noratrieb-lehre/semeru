@@ -68,7 +68,7 @@ const SignIn = () => {
                 }}
             >
                 {(["email", "password"] as ["email", "password"]).map((fieldName) => (
-                    <Form.Group>
+                    <Form.Group key={fieldName}>
                         <Form.Label>{locale.auth[fieldName]}</Form.Label>
                         <Form.Control
                             type={fieldName}
@@ -82,19 +82,6 @@ const SignIn = () => {
                         </Alert>
                     </Form.Group>
                 ))}
-                {/*<Form.Group>*/}
-                {/*    <Form.Label>{locale.auth.password}</Form.Label>*/}
-                {/*    <Form.Control*/}
-                {/*        type="password"*/}
-                {/*        name="password"*/}
-                {/*        isInvalid={!!formik.errors.password}*/}
-                {/*        value={formik.values.password}*/}
-                {/*        onChange={formik.handleChange}*/}
-                {/*    />*/}
-                {/*    <Alert variant="danger" show={!!formik.errors.password}>*/}
-                {/*        {formik.errors.password}*/}
-                {/*    </Alert>*/}
-                {/*</Form.Group>*/}
                 <Button type="submit">{locale.auth.signIn}</Button>
                 <Alert variant="danger" show={!!error}>
                     {error}
