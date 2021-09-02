@@ -26,7 +26,18 @@ export default abstract class Store {
             name,
         };
 
-        await Promise.all([this.push("tasks", newTask), this.set("currentTask", null)]);
+        await Promise.all([this.addTask(newTask), this.set("currentTask", null)]);
+    }
+
+    public async clear(): Promise<void> {
+        await this.set("tasks", {});
+        await this.set("currentTask", {});
+        await this.set("quickTasks", {});
+        await this.set("locale", "en");
+    }
+
+    public async addTask(task: Task): Promise<void> {
+        await this.push("tasks", task);
     }
 
     public async cancel() {

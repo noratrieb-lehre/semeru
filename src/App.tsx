@@ -14,7 +14,7 @@ import CloudStore from "./store/CloudStore";
 
 import de from "./locale/de.json";
 import en from "./locale/en2.json";
-import { Collection } from "./Task";
+import { Collection, collectionToArray } from "./Task";
 
 type Locale = typeof de;
 type LocaleName = "en" | "de";
@@ -65,18 +65,7 @@ const App = () => {
         });
     }, []);
 
-    const addQuickTaskHandler = async (task: QTask) => {
-        await store.addQuickTask(task);
-        // it is going to get displayed automatically thanks to the listener above, just like the 2 below
-    };
-
-    const removeQuickTaskHandler = (id: string) => {
-        store.removeQuickTask(id).then();
-    };
-
-    const changeLocale = (name: LocaleName) => {
-        store.setLocale(name).then();
-    };
+    const changeLocale = (name: LocaleName) => store.setLocale(name).then();
 
     return (
         <div>
@@ -88,9 +77,10 @@ const App = () => {
                             <Switch>
                                 <Route path="/settings">
                                     <Settings
-                                        removeQuickTaskHandler={removeQuickTaskHandler}
-                                        addQuickTaskHandler={addQuickTaskHandler}
+                                        /* casts are valid because user must exist for these to be used*/
                                         quickTasks={quickTasks}
+                                        upload={() => copyValues(globalLocalStore, store)}
+                                        download={() => copyValues(store, globalLocalStore)}
                                     />
                                 </Route>
                                 <Route path="/stats">
@@ -108,6 +98,21 @@ const App = () => {
             </BrowserRouter>
         </div>
     );
+};
+
+const copyValues = async (source: Store, target: Store) => {
+    await target.clear();
+    await source.getTasks((tasks) => {
+        collectionToArray(tasks).forEach((task) => target.addTask(task));
+    });
+    await source.getLocale((locale) => target.setLocale(locale));
+    await source.getQuickTasks((quickTasks) =>
+        collectionToArray(quickTasks).forEach((quickTask) => target.addQuickTask(quickTask))
+    );
+    await source.getCurrentTask((currentTask) => target.updateCurrentTask(currentTask));
+
+    // clear all listeners that were created
+    window.location.reload();
 };
 
 export default App;

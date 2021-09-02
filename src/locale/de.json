@@ -23,7 +23,14 @@
   "settings": {
     "quickTasks": "Schnelltasks",
     "new": "Neu",
-    "newTaskMessage": "Aufgabenname eingeben"
+    "newTaskMessage": "Aufgabenname eingeben",
+    "synchronizeTitle": "Mit der Cloud synchronosieren",
+    "mustBeLoggedIn": "Du musst eingeogged sein, um diese Funktion zu benutzen",
+    "fromLtoC": "Von Lokal zur Cloud",
+    "fromCtoL": "Von der Cloud zu Lokal",
+    "upload": "Hochladen",
+    "download": "Herunterladen",
+    "syncExplain": "Man kann alles lokal speichern, um die App zu nutzen, ohne eingelogged zu sein."
   },
   "stats": {
     "day": "Tag",
