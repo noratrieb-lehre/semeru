@@ -1,4 +1,4 @@
-import { Collection } from "../Task";
+import { Collection, collectionToArray } from "../Task";
 import Store, { Listener, PropertyName } from "./Store";
 import { QTask } from "../components/QuickTask";
 
@@ -31,8 +31,12 @@ export default class LocalStore extends Store {
         this._listeners = this._listeners.filter(({ listener }) => listener !== toRemove);
     }
 
+    public pushAll<T>(name: PropertyName, value: Collection<T>) {
+        this.set(name, collectionToArray(value)).then();
+    }
+
     protected async push<T>(name: PropertyName, value: T): Promise<void> {
-        const id = `id${Date.now()}_${Math.floor(Math.random() * 100)}`; // very very cool id
+        const id = `id${Date.now()}_${Math.floor(Math.random() * 1000)}`; // very very cool id
         const values = await this.getSingle<Collection<T>>(name, {});
         values[id] = value;
         await this.set(name, values);

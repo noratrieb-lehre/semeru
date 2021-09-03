@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import QuickTask, { QTask } from "./QuickTask";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import { LocaleContext, StoreContext, UserContext } from "../App";
+import { ErrorContext, LocaleContext, StoreContext, UserContext } from "../App";
 import { Collection } from "../Task";
 
 interface SettingsProps {
@@ -14,16 +14,18 @@ const Settings = ({ quickTasks, upload, download }: SettingsProps) => {
     const locale = useContext(LocaleContext);
     const user = useContext(UserContext);
     const store = useContext(StoreContext);
+    const error = useContext(ErrorContext);
 
     const newQuickTask = async () => {
         const task = window.prompt(locale.settings.newTaskMessage);
         if (!task) {
             return;
         }
-        await store.addQuickTask(task);
+        await store.addQuickTask(task).then(error("not an error")).catch(error(locale.errors.addQuickTask));
     };
 
-    const removeQuickTaskHandler = (id: string) => store.removeQuickTask(id).then();
+    const removeQuickTaskHandler = (id: string) =>
+        store.removeQuickTask(id).catch(error(locale.errors.removeQuickTask));
 
     return (
         <Container>

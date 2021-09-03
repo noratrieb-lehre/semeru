@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { LocaleContext, StoreContext } from "../App";
+import { ErrorContext, LocaleContext, StoreContext } from "../App";
 import { Button, Col, Row } from "react-bootstrap";
 import { Collection, collectionToArray, CurrentTask, CurrentTaskWB, totalCurrentTaskTime, withBreaks } from "../Task";
 import QuickTask, { QTask } from "./QuickTask";
@@ -11,11 +11,12 @@ interface TimerPageProps {
 const TimerPage = ({ quickTasks }: TimerPageProps) => {
     const locale = useContext(LocaleContext);
     const store = useContext(StoreContext);
+    const error = useContext(ErrorContext);
     const [task, setCurrentTask] = useState<CurrentTaskWB | null>(null);
 
     useEffect(() => {
         const listener = (newTask: CurrentTask | null) => setCurrentTask(newTask ? withBreaks(newTask) : null);
-        store.getCurrentTask(listener).then();
+        store.getCurrentTask(listener).catch(error(locale.errors.getCurrentTask));
 
         return () => void store.removeListener(listener);
     }, [store]);
@@ -32,7 +33,7 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
             ...task,
             currentBreakStart: Date.now(),
         };
-        store.updateCurrentTask(next).then();
+        store.updateCurrentTask(next).catch(error(locale.errors.updateCurrentTask));
     };
 
     const resumeHandler = () => {
@@ -50,7 +51,7 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
                 },
             ],
         };
-        store.updateCurrentTask(next).then();
+        store.updateCurrentTask(next).catch(error(locale.errors.updateCurrentTask));
     };
 
     const stopHandler = async () => {
@@ -152,9 +153,9 @@ function formatTime(time: number): string {
     }
 
     return (
-        `${Math.floor(hours).toString().padStart(2, "0")}:` +
-        `${Math.floor(minutes).toString().padStart(2, "0")}:` +
-        `${Math.floor(seconds).toString().padStart(2, "0")}`
+        `${Math.floor(Math.max(hours, 0)).toString().padStart(2, "0")}:` +
+        `${Math.floor(Math.max(minutes, 0)).toString().padStart(2, "0")}:` +
+        `${Math.floor(Math.max(seconds, 0)).toString().padStart(2, "0")}`
     );
 }
 

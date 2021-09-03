@@ -1,6 +1,16 @@
 {
+  "name": "en",
   "test": {
     "greeting": "hi"
+  },
+  "errors": {
+    "removeQuickTask": "Failed to remove quick task",
+    "addQuickTask": "Failed to add quick task",
+    "getTasks": "Failed to fetch tasks",
+    "getCurrentTask": "Failed to fetch current task",
+    "updateCurrentTask": "Failed to update current task",
+    "getQuickTasks": "Failed to fetch quick tasks",
+    "setLocale": "Failed to save language settings"
   },
   "root": {
     "timerPage": "Timer",

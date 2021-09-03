@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { LocaleContext, StoreContext } from "../App";
+import { ErrorContext, LocaleContext, StoreContext } from "../App";
 import { Button, Col, Container, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import { Collection, collectionToArray, Task, TaskTimes, timeForTasksSince, withBreaksArray } from "../Task";
 
@@ -10,6 +10,7 @@ const times: Time[] = ["day", "week", "month", "all"];
 const Stats = () => {
     const locale = useContext(LocaleContext);
     const store = useContext(StoreContext);
+    const error = useContext(ErrorContext);
 
     const [groupedBy, setGroupedBy] = useState<Time>("day");
 
@@ -18,10 +19,10 @@ const Stats = () => {
     useEffect(() => {
         const listener = (newTasks: Collection<Task>) =>
             setTasks(timeForTasksSince(withBreaksArray(collectionToArray(newTasks)), toTimestamp(groupedBy)));
-        store.getTasks(listener).then();
+        store.getTasks(listener).catch(error(locale.errors.getTasks));
 
-        return () => void store.removeListener(listener).then();
-    }, [store, groupedBy]);
+        return () => void store.removeListener(listener).catch(error(locale.errors.getTasks));
+    }, [locale, error, store, groupedBy]);
 
     return (
         <Container>

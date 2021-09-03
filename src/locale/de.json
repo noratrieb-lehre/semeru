@@ -1,6 +1,16 @@
 {
+  "name": "de",
   "test": {
     "greeting": "hallo"
+  },
+  "errors": {
+    "removeQuickTask": "Konnte Schnelltask nicht löschen",
+    "addQuickTask": "Konnte Schnelltask nicht hinzufügen",
+    "getTasks": "Konnte Tasks nicht laden",
+    "getCurrentTask": "Konnte die aktuelle Task nicht laden",
+    "updateCurrentTask": "Konnte die aktuelle Task nicht speichern",
+    "getQuickTasks": "Konnte Schnelltasks nicht laden",
+    "setLocale": "Konnte Spracheinstellungen nicht speichern"
   },
   "root": {
     "timerPage": "Timer",
