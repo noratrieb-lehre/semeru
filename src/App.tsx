@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import firebase from "firebase/compat";
 import { QTask } from "./components/QuickTask";
@@ -38,8 +38,8 @@ const StoreContext = React.createContext<Store>(globalLocalStore);
 const ErrorContext = React.createContext<ErrorHandler>(() => () => {});
 
 const App = () => {
-    const errorHandler = useMemo(
-        () => (msg: string) => () => {
+    const errorHandler = useCallback(
+        (msg: string) => () => {
             console.error(msg);
             setError(msg);
             setTimeout(() => setError(null), 3000);
@@ -54,26 +54,30 @@ const App = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const listener = (locale: LocaleName) => setLocale(locales[locale]);
+        const listener = (newLocale: LocaleName) => setLocale(locales[newLocale]);
         store.getLocale(listener).catch();
 
-        return () => void store.removeListener(listener);
-    }, [store]);
+        return () => {
+            store.removeListener(listener).catch(errorHandler(locale.errors.getQuickTasks));
+        };
+    }, [locale, errorHandler, store]);
 
     useEffect(() => {
         const listener = (qTasks: Collection<QTask>) => setQuickTasks(qTasks);
         store.getQuickTasks(listener).catch(errorHandler(locale.errors.getQuickTasks));
 
-        return () => void store.removeListener(listener);
+        return () => {
+            store.removeListener(listener).catch(errorHandler(locale.errors.getQuickTasks));
+        };
     }, [locale, errorHandler, store]);
 
     useEffect(() => {
-        firebase.auth().onAuthStateChanged((user) => {
-            setUser(user);
-            if (!user) {
+        firebase.auth().onAuthStateChanged((newUser) => {
+            setUser(newUser);
+            if (!newUser) {
                 setStore(globalLocalStore);
             } else {
-                setStore(new CloudStore(user));
+                setStore(new CloudStore(newUser));
             }
         });
     }, []);

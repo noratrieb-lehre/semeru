@@ -21,27 +21,27 @@ export default class CloudStore extends Store {
         if (!firebaseListener) {
             return;
         }
-        await firebase
+        firebase
             .database()
             .ref(`users/${this._user.uid}/${firebaseListener.name}`)
             .off("value", firebaseListener.listener);
-    }
-
-    protected set<T>(name: PropertyName, value: T): Promise<void> {
-        return firebase.database().ref(`users/${this._user.uid}/${name}`).set(value);
-    }
-
-    protected async push<T>(name: PropertyName, value: T): Promise<void> {
-        await firebase.database().ref(`users/${this._user.uid}/${name}`).push(value);
     }
 
     public async removeQuickTask(id: string): Promise<void> {
         await firebase.database().ref(`users/${this._user.uid}/quickTasks/${id}`).set(null);
     }
 
+    protected async set<T>(name: PropertyName, value: T): Promise<void> {
+        await firebase.database().ref(`users/${this._user.uid}/${name}`).set(value);
+    }
+
+    protected async push<T>(name: PropertyName, value: T): Promise<void> {
+        firebase.database().ref(`users/${this._user.uid}/${name}`).push(value);
+    }
+
     protected async get<T>(name: PropertyName, defaultValue: T, listener: Listener<T>): Promise<void> {
         const firebaseListener: FirebaseListener = (data) => listener(data.val() || defaultValue);
         this._listenerMap.set(listener, { name, listener: firebaseListener });
-        await firebase.database().ref(`users/${this._user.uid}/${name}`).on("value", firebaseListener);
+        firebase.database().ref(`users/${this._user.uid}/${name}`).on("value", firebaseListener);
     }
 }
