@@ -13,12 +13,12 @@ export default class LocalStore extends Store {
         return JSON.parse(item);
     }
 
-    async set<T>(name: PropertyName, value: T) {
-        const string = JSON.stringify(value);
+    async set<T>(name: PropertyName, newValue: T) {
+        const string = JSON.stringify(newValue);
         localStorage.setItem(name, string);
         this._listeners
             .filter(({ value }) => value === name)
-            .forEach(({ listener, defaultValue }) => listener(value || defaultValue));
+            .forEach(({ listener, defaultValue }) => listener(newValue || defaultValue));
     }
 
     public async removeQuickTask(id: string): Promise<void> {
