@@ -21,7 +21,7 @@ const Settings = ({ quickTasks, upload, download }: SettingsProps) => {
         if (!task) {
             return;
         }
-        await store.addQuickTask(task).then(error("not an error")).catch(error(locale.errors.addQuickTask));
+        await store.addQuickTask(task).catch(error(locale.errors.addQuickTask));
     };
 
     const removeQuickTaskHandler = (id: string) =>
