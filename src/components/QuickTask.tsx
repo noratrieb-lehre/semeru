@@ -6,11 +6,12 @@ export type QTask = string;
 interface QuickTaskProps {
     name: QTask;
     handler: () => void;
+    highlight?: boolean;
 }
 
-const QuickTask = ({ name, handler }: QuickTaskProps) => {
+const QuickTask = ({ highlight, name, handler }: QuickTaskProps) => {
     return (
-        <Button onClick={handler} variant="outline-success" className="m-1">
+        <Button onClick={handler} variant={highlight ? "success" : "outline-success"} className="m-1">
             {name}
         </Button>
     );

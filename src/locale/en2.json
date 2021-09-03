@@ -10,7 +10,8 @@
     "getCurrentTask": "Failed to fetch current task",
     "updateCurrentTask": "Failed to update current task",
     "getQuickTasks": "Failed to fetch quick tasks",
-    "setLocale": "Failed to save language settings"
+    "setLocale": "Failed to save language settings",
+    "addTask": "Failed to save task"
   },
   "root": {
     "timerPage": "Timer",
@@ -28,7 +29,8 @@
     "resume": "Resume",
     "stop": "Stop",
     "cancel": "Cancel",
-    "enterLastTaskName": "Enter name for the last task:"
+    "enterLastTaskName": "Enter name for the last task:",
+    "enterBreakName": "Enter the task during the break (empty for nothing):"
   },
   "settings": {
     "quickTasks": "Quick Tasks",

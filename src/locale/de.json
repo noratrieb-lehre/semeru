@@ -10,7 +10,8 @@
     "getCurrentTask": "Konnte die aktuelle Task nicht laden",
     "updateCurrentTask": "Konnte die aktuelle Task nicht speichern",
     "getQuickTasks": "Konnte Schnelltasks nicht laden",
-    "setLocale": "Konnte Spracheinstellungen nicht speichern"
+    "setLocale": "Konnte Spracheinstellungen nicht speichern",
+    "addTask": "Konnte Task nicht speichern"
   },
   "root": {
     "timerPage": "Timer",
@@ -28,7 +29,8 @@
     "resume": "Weiter",
     "stop": "Stopp",
     "cancel": "Abbrechen",
-    "enterLastTaskName": "Name der letzten Aufgabe eingeben:"
+    "enterLastTaskName": "Name der letzten Aufgabe eingeben:",
+    "enterBreakName": "Task während der Pause eingeben (leer für keine):"
   },
   "settings": {
     "quickTasks": "Schnelltasks",

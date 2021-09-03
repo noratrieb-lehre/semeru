@@ -1,7 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ErrorContext, LocaleContext, StoreContext } from "../App";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import { Collection, collectionToArray, CurrentTask, CurrentTaskWB, totalCurrentTaskTime, withBreaks } from "../Task";
+import {
+    Collection,
+    collectionToArray,
+    CurrentTask,
+    CurrentTaskWB,
+    Task,
+    totalCurrentTaskTime,
+    withBreaks,
+} from "../Task";
 import QuickTask, { QTask } from "./QuickTask";
 
 interface TimerPageProps {
@@ -12,18 +20,17 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
     const locale = useContext(LocaleContext);
     const store = useContext(StoreContext);
     const error = useContext(ErrorContext);
-    const [task, setCurrentTask] = useState<CurrentTaskWB | null>(null);
+    const [task, setTask] = useState<CurrentTaskWB | null>(null);
+    const quickTaskArray = collectionToArray(quickTasks);
 
     useEffect(() => {
-        const listener = (newTask: CurrentTask | null) => setCurrentTask(newTask ? withBreaks(newTask) : null);
+        const listener = (newTask: CurrentTask | null) => setTask(newTask ? withBreaks(newTask) : null);
         store.getCurrentTask(listener).catch(error(locale.errors.getCurrentTask));
 
         return () => {
             store.removeListener(listener).catch(error(locale.errors.getCurrentTask));
         };
     }, [locale, error, store]);
-
-    const quickTaskArray = collectionToArray(quickTasks);
 
     const startHandler = async (name?: string) => {
         await stopHandler();
@@ -42,6 +49,7 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
         if (!task?.currentBreakStart) {
             return task;
         }
+        const breakEnd = Date.now();
         const next = task && {
             start: task.start,
             name: task.name,
@@ -49,11 +57,23 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
                 ...task.breaks,
                 {
                     start: task.currentBreakStart,
-                    end: Date.now(),
+                    end: breakEnd,
                 },
             ],
         };
         store.updateCurrentTask(next).catch(error(locale.errors.updateCurrentTask));
+
+        // if we block on break name for a long time, everything is still accounted for correctly, since all timestamps have been saved
+        const breakName = window.prompt(locale.timer.enterBreakName);
+        if (breakName) {
+            const newTask: Task = {
+                start: task.currentBreakStart,
+                name: breakName,
+                end: breakEnd,
+                breaks: [],
+            };
+            store.addTask(newTask).catch(error(locale.errors.addTask));
+        }
     };
 
     const stopHandler = async () => {
@@ -69,12 +89,16 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
             name = input;
         }
         const namedTask = { ...task, name };
-        await store.stop(namedTask);
+        await store.stop(namedTask).catch(error(locale.errors.addTask));
     };
 
     const cancelHandler = async () => {
         await store.cancel();
     };
+
+    // whether the current task was started from the quick tasks.
+    // note: this does not accurately show whether a name will need to be entered, since the quick task could have been deleted
+    const anyQuickTaskMatch = !!quickTaskArray.find((qt) => qt === task?.name);
 
     return (
         <Col className="d-grid justify-content-center">
@@ -84,7 +108,10 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
                 </Container>
                 <Container className="d-grid justify-content-center">
                     <Col>
-                        <Button variant="outline-success" onClick={() => startHandler()}>
+                        <Button
+                            variant={anyQuickTaskMatch || !task ? "outline-success" : "success"}
+                            onClick={() => startHandler()}
+                        >
                             {locale.timer.start}
                         </Button>
                         {task?.currentBreakStart ? (
@@ -108,7 +135,12 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
             <div className="m-3" />
             <Row className="d-grid justify-content-center">
                 {quickTaskArray.map((quickTask) => (
-                    <QuickTask name={quickTask} handler={() => startHandler(quickTask)} key={quickTask} />
+                    <QuickTask
+                        highlight={quickTask === task?.name}
+                        name={quickTask}
+                        handler={() => startHandler(quickTask)}
+                        key={quickTask}
+                    />
                 ))}
             </Row>
         </Col>
