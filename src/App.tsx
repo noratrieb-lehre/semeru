@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { HashRouter, Route, Switch } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import { QTask } from "./components/QuickTask";
 import Menu from "./components/Menu";
@@ -86,7 +86,7 @@ const App = () => {
 
     return (
         <div lang={locale.name}>
-            <BrowserRouter>
+            <HashRouter>
                 <LocaleContext.Provider value={locale}>
                     <UserContext.Provider value={user}>
                         <StoreContext.Provider value={store}>
@@ -118,7 +118,7 @@ const App = () => {
                         </StoreContext.Provider>
                     </UserContext.Provider>
                 </LocaleContext.Provider>
-            </BrowserRouter>
+            </HashRouter>
         </div>
     );
 };
