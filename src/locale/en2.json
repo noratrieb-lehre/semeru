@@ -40,7 +40,9 @@
     "fromCtoL": "From the cloud to local",
     "upload": "Upload",
     "download": "Download",
-    "syncExplain": "You can save everything locally, so you can continue to use the app even if you are not logged in."
+    "syncExplain": "You can save everything locally, so you can continue to use the app even if you are not logged in.",
+    "deleteData": "Delete data. This can not be undone!",
+    "delete": "Delete"
   },
   "stats": {
     "day": "Day",

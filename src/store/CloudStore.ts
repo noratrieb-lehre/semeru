@@ -21,27 +21,39 @@ export default class CloudStore extends Store {
         if (!firebaseListener) {
             return;
         }
-        firebase
-            .database()
-            .ref(`users/${this._user.uid}/${firebaseListener.name}`)
-            .off("value", firebaseListener.listener);
+        firebase.database().ref(this.path(firebaseListener.name)).off("value", firebaseListener.listener);
     }
 
     public async removeQuickTask(id: string): Promise<void> {
-        await firebase.database().ref(`users/${this._user.uid}/quickTasks/${id}`).set(null);
+        await firebase
+            .database()
+            .ref(`${this.path("quickTasks")}/${id}`)
+            .set(null);
+    }
+
+    public getOnce<T>(name: PropertyName, defaultValue: T): Promise<T> {
+        return firebase
+            .database()
+            .ref(this.path(name))
+            .get()
+            .then((val) => val.val());
     }
 
     protected async set<T>(name: PropertyName, value: T): Promise<void> {
-        await firebase.database().ref(`users/${this._user.uid}/${name}`).set(value);
+        await firebase.database().ref(this.path(name)).set(value);
     }
 
     protected async push<T>(name: PropertyName, value: T): Promise<void> {
-        firebase.database().ref(`users/${this._user.uid}/${name}`).push(value);
+        firebase.database().ref(this.path(name)).push(value);
     }
 
     protected async get<T>(name: PropertyName, defaultValue: T, listener: Listener<T>): Promise<void> {
         const firebaseListener: FirebaseListener = (data) => listener(data.val() || defaultValue);
         this._listenerMap.set(listener, { name, listener: firebaseListener });
-        firebase.database().ref(`users/${this._user.uid}/${name}`).on("value", firebaseListener);
+        firebase.database().ref(this.path(name)).on("value", firebaseListener);
+    }
+
+    private path(name: string): string {
+        return `users/${this._user.uid}/${name}`;
     }
 }

@@ -5,7 +5,7 @@ import { QTask } from "../components/QuickTask";
 export default class LocalStore extends Store {
     _listeners: Array<{ value: PropertyName; listener: Listener<any>; defaultValue: any }> = [];
 
-    async getSingle<T>(name: PropertyName, defaultValue: T): Promise<T> {
+    public async getOnce<T>(name: PropertyName, defaultValue: T): Promise<T> {
         const item = localStorage.getItem(name);
         if (!item) {
             return defaultValue;
@@ -22,7 +22,7 @@ export default class LocalStore extends Store {
     }
 
     public async removeQuickTask(id: string): Promise<void> {
-        const tasks = await this.getSingle<Collection<QTask>>("quickTasks", {});
+        const tasks = await this.getOnce<Collection<QTask>>("quickTasks", {});
         delete tasks[id];
         await this.set("quickTasks", tasks);
     }
@@ -37,13 +37,13 @@ export default class LocalStore extends Store {
 
     protected async push<T>(name: PropertyName, value: T): Promise<void> {
         const id = `id${Date.now()}_${Math.floor(Math.random() * 1000)}`; // very very cool id
-        const values = await this.getSingle<Collection<T>>(name, {});
+        const values = await this.getOnce<Collection<T>>(name, {});
         values[id] = value;
         await this.set(name, values);
     }
 
     protected async get<T>(value: PropertyName, defaultValue: T, listener: Listener<T>): Promise<void> {
         this._listeners.push({ value, listener, defaultValue });
-        listener(await this.getSingle(value, defaultValue));
+        listener(await this.getOnce(value, defaultValue));
     }
 }

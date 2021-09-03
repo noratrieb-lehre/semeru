@@ -8,7 +8,7 @@ import Settings from "./components/Settings";
 import Stats from "./components/Stats";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
-import Store, { Listener } from "./store/Store";
+import Store from "./store/Store";
 import LocalStore from "./store/LocalStore";
 import CloudStore from "./store/CloudStore";
 import { Collection, collectionToArray, CurrentTask, Task } from "./Task";
@@ -95,10 +95,9 @@ const App = () => {
                                 <Switch>
                                     <Route path="/settings">
                                         <Settings
-                                            /* casts are valid because user must exist for these to be used */
                                             quickTasks={quickTasks}
-                                            upload={() => localToCloud(globalLocalStore, store as CloudStore)}
-                                            download={() => cloudToLocal(store as CloudStore, globalLocalStore)}
+                                            upload={() => copyData(globalLocalStore, store)}
+                                            download={() => copyData(store, globalLocalStore)}
                                         />
                                     </Route>
                                     <Route path="/stats">
@@ -124,46 +123,20 @@ const App = () => {
     );
 };
 
-const cloudToLocal = async (source: CloudStore, target: LocalStore) => {
-    await target.clear();
+const copyData = async (source: Store, target: Store) => {
+    await source
+        .getOnce<Collection<Task>>("tasks", {})
+        .then((tasks) => collectionToArray(tasks).forEach((task) => target.addTask(task)));
 
-    const getTasks: Listener<Collection<Task>> = (tasks) => target.pushAll("tasks", tasks);
-    await source.getTasks(getTasks);
-    await source.removeListener(getTasks);
+    await source.getOnce<LocaleName>("locale", "en").then((locale) => target.setLocale(locale));
 
-    const getLocale = (locale: LocaleName) => target.setLocale(locale);
-    await source.getLocale(getLocale);
-    await source.removeListener(getLocale);
+    await source
+        .getOnce<Collection<QTask>>("quickTasks", {})
+        .then((quickTasks) => collectionToArray(quickTasks).forEach((quickTask) => target.addQuickTask(quickTask)));
 
-    const getQuickTasks = (quickTasks: Collection<QTask>) => target.pushAll("quickTasks", quickTasks);
-    await source.getQuickTasks(getQuickTasks);
-    await source.removeListener(getQuickTasks);
-
-    const getCurrentTask = (currentTask: CurrentTask | null) => target.updateCurrentTask(currentTask);
-    await source.getCurrentTask(getCurrentTask);
-    await source.removeListener(getCurrentTask);
-};
-
-const localToCloud = async (source: LocalStore, target: CloudStore) => {
-    await target.clear();
-
-    const getTasks: Listener<Collection<Task>> = (tasks) =>
-        collectionToArray(tasks).forEach((task) => target.addTask(task));
-    await source.getTasks(getTasks);
-    await source.removeListener(getTasks);
-
-    const getLocale = (locale: LocaleName) => target.setLocale(locale);
-    await source.getLocale(getLocale);
-    await source.removeListener(getLocale);
-
-    const getQuickTasks = (quickTasks: Collection<QTask>) =>
-        collectionToArray(quickTasks).forEach((quickTask) => target.addQuickTask(quickTask));
-    await source.getQuickTasks(getQuickTasks);
-    await source.removeListener(getQuickTasks);
-
-    const getCurrentTask = (currentTask: CurrentTask | null) => target.updateCurrentTask(currentTask);
-    await source.getCurrentTask(getCurrentTask);
-    await source.removeListener(getCurrentTask);
+    await source
+        .getOnce<CurrentTask | null>("currentTask", null)
+        .then((currentTask) => target.updateCurrentTask(currentTask));
 };
 
 export default App;

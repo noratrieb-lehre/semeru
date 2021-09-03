@@ -63,9 +63,13 @@ const Settings = ({ quickTasks, upload, download }: SettingsProps) => {
                             <Button variant="outline-primary" onClick={upload}>
                                 {locale.settings.upload}
                             </Button>
-                            <h5>{locale.settings.fromLtoC}</h5>
+                            <h5 className="mt-3">{locale.settings.fromLtoC}</h5>
                             <Button variant="outline-primary" onClick={download}>
                                 {locale.settings.download}
+                            </Button>
+                            <h5 className="mt-3">{locale.settings.deleteData}</h5>
+                            <Button variant="outline-primary" onClick={download}>
+                                {locale.settings.delete}
                             </Button>
                         </Col>
                     ) : (

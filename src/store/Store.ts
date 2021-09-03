@@ -76,6 +76,11 @@ export default abstract class Store {
 
     public abstract removeListener(listener: Listener<any>): Promise<void>;
 
+    /**
+     * Only use this if realtime-reloading is explicitly *not* wanted
+     */
+    public abstract getOnce<T>(name: PropertyName, defaultValue: T): Promise<T>;
+
     protected abstract get<T>(name: PropertyName, defaultValue: T, listener: Listener<T>): Promise<void>;
 
     protected abstract set<T>(name: PropertyName, value: T): Promise<void>;
