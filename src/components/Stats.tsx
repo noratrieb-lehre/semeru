@@ -28,7 +28,7 @@ const Stats = () => {
 
     return (
         <Container>
-            <div>
+            <div className="mb-2">
                 {times.map((name) => (
                     <span className="m-1" key={name}>
                         <Button
