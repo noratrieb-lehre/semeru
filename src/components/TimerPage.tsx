@@ -100,6 +100,7 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
     return (
         <Col className="d-grid justify-content-center">
             <Row>
+                {/*<Prompt show onInput={() => {}} text={"halol"} />*/}
                 <Container className="d-grid justify-content-center">
                     <Timer task={task} />
                 </Container>
