@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.js": "/semeru/static/js/main.a14ef3c9.chunk.js",
+    "main.js.map": "/semeru/static/js/main.a14ef3c9.chunk.js.map",
+    "runtime-main.js": "/semeru/static/js/runtime-main.c080781f.js",
+    "runtime-main.js.map": "/semeru/static/js/runtime-main.c080781f.js.map",
+    "static/css/2.818011ed.chunk.css": "/semeru/static/css/2.818011ed.chunk.css",
+    "static/js/2.9ae32f07.chunk.js": "/semeru/static/js/2.9ae32f07.chunk.js",
+    "static/js/2.9ae32f07.chunk.js.map": "/semeru/static/js/2.9ae32f07.chunk.js.map",
+    "index.html": "/semeru/index.html",
+    "static/css/2.818011ed.chunk.css.map": "/semeru/static/css/2.818011ed.chunk.css.map",
+    "static/js/2.9ae32f07.chunk.js.LICENSE.txt": "/semeru/static/js/2.9ae32f07.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c080781f.js",
+    "static/css/2.818011ed.chunk.css",
+    "static/js/2.9ae32f07.chunk.js",
+    "static/js/main.a14ef3c9.chunk.js"
+  ]
+}
