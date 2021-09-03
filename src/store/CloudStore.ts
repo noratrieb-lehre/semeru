@@ -1,5 +1,5 @@
 import Store, { Listener, PropertyName } from "./Store";
-import firebase from "firebase/compat";
+import firebase from "firebase/compat/app";
 
 type FirebaseListener = (a: firebase.database.DataSnapshot, b?: string | null) => any;
 

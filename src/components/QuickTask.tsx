@@ -10,7 +10,7 @@ interface QuickTaskProps {
 
 const QuickTask = ({ name, handler }: QuickTaskProps) => {
     return (
-        <Button onClick={handler} variant="success">
+        <Button onClick={handler} variant="outline-success" className="m-1">
             {name}
         </Button>
     );

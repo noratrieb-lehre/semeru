@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import firebase from "firebase/compat";
+import firebase from "firebase/compat/app";
 import { QTask } from "./components/QuickTask";
 import Menu from "./components/Menu";
 import TimerPage from "./components/TimerPage";

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ErrorContext, LocaleContext, StoreContext } from "../App";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { Collection, collectionToArray, CurrentTask, CurrentTaskWB, totalCurrentTaskTime, withBreaks } from "../Task";
 import QuickTask, { QTask } from "./QuickTask";
 
@@ -77,38 +77,36 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
     };
 
     return (
-        <Col>
+        <Col className="d-grid justify-content-center">
             <Row>
-                <Button variant="success" onClick={() => startHandler()}>
-                    {locale.timer.start}
-                </Button>
-            </Row>
-            <Row>
-                <Col>
+                <Container className="d-grid justify-content-center">
                     <Timer task={task} />
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    {task?.currentBreakStart ? (
-                        <Button variant="info" onClick={resumeHandler}>
-                            {locale.timer.resume}
+                </Container>
+                <Container className="d-grid justify-content-center">
+                    <Col>
+                        <Button variant="outline-success" onClick={() => startHandler()}>
+                            {locale.timer.start}
                         </Button>
-                    ) : (
-                        <Button variant="info" onClick={pauseHandler}>
-                            {locale.timer.pause}
+                        {task?.currentBreakStart ? (
+                            <Button variant="outline-info" className="m-1" onClick={resumeHandler}>
+                                {locale.timer.resume}
+                            </Button>
+                        ) : (
+                            <Button variant="outline-info" className="m-1" onClick={pauseHandler}>
+                                {locale.timer.pause}
+                            </Button>
+                        )}
+                        <Button variant="outline-danger" onClick={stopHandler}>
+                            {locale.timer.stop}
                         </Button>
-                    )}
-                    <Button variant="danger" onClick={stopHandler}>
-                        {locale.timer.stop}
-                    </Button>
-                    <Button variant="danger" onClick={cancelHandler}>
-                        {locale.timer.cancel}
-                    </Button>
-                </Col>
+                        <Button variant="outline-danger" className="m-1" onClick={cancelHandler}>
+                            {locale.timer.cancel}
+                        </Button>
+                    </Col>
+                </Container>
             </Row>
             <div className="m-3" />
-            <Row>
+            <Row className="d-grid justify-content-center">
                 {quickTaskArray.map((quickTask) => (
                     <QuickTask name={quickTask} handler={() => startHandler(quickTask)} key={quickTask} />
                 ))}
@@ -123,7 +121,7 @@ interface TimerProps {
 
 const Timer = (props: TimerProps) => {
     return (
-        <h1>
+        <h1 style={{ fontSize: 60 }}>
             <TimerInner {...props} />
         </h1>
     );

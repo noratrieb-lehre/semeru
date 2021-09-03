@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { LocaleContext, LocaleName, UserContext } from "../App";
 import { NavLink } from "react-router-dom";
-import { Button, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import firebase from "firebase/compat";
+import { Button, Col, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import firebase from "firebase/compat/app";
 
 interface MenuProps {
     changeLocale: (name: LocaleName) => void;
@@ -41,7 +41,11 @@ const Menu = ({ changeLocale }: MenuProps) => {
                             {locale.root.dataPage}
                         </NavLink>
                         {user ? (
-                            <Button onClick={signOut}>{locale.auth.signOut}</Button>
+                            <Col>
+                                <Button variant="outline-primary" onClick={signOut}>
+                                    {locale.auth.signOut}
+                                </Button>
+                            </Col>
                         ) : (
                             <NavLink to="/sign-in" className="nav-link">
                                 {locale.auth.signIn}

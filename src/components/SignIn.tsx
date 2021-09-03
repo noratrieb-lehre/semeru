@@ -3,7 +3,7 @@ import { Alert, Button, Form } from "react-bootstrap";
 import { LocaleContext } from "../App";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import firebase from "firebase/compat";
+import firebase from "firebase/compat/app";
 import { NavLink, useHistory } from "react-router-dom";
 
 interface FormValues {

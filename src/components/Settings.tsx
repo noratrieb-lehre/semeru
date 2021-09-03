@@ -36,9 +36,11 @@ const Settings = ({ quickTasks, upload, download }: SettingsProps) => {
                         <Row key={id}>
                             <Col xs={10}>
                                 <QuickTask name={task} handler={() => {}} />
-                            </Col>
-                            <Col xs={2}>
-                                <Button onClick={() => removeQuickTaskHandler(id)} variant="danger">
+                                <Button
+                                    className="m-1"
+                                    onClick={() => removeQuickTaskHandler(id)}
+                                    variant="outline-danger"
+                                >
                                     X
                                 </Button>
                             </Col>
@@ -46,20 +48,26 @@ const Settings = ({ quickTasks, upload, download }: SettingsProps) => {
                     ))}
                     <Row>
                         <Col>
-                            <Button onClick={newQuickTask}>{locale.settings.new}</Button>
+                            <Button variant="outline-primary" className="m-1" onClick={newQuickTask}>
+                                {locale.settings.new}
+                            </Button>
                         </Col>
                     </Row>
                 </Row>
                 <Row className="mb-4">
                     <h2>{locale.settings.synchronizeTitle}</h2>
                     {user ? (
-                        <>
+                        <Col>
                             {locale.settings.syncExplain}
                             <h5>{locale.settings.fromCtoL}</h5>
-                            <Button onClick={upload}>{locale.settings.upload}</Button>
+                            <Button variant="outline-primary" onClick={upload}>
+                                {locale.settings.upload}
+                            </Button>
                             <h5>{locale.settings.fromLtoC}</h5>
-                            <Button onClick={download}>{locale.settings.download}</Button>
-                        </>
+                            <Button variant="outline-primary" onClick={download}>
+                                {locale.settings.download}
+                            </Button>
+                        </Col>
                     ) : (
                         <h5>{locale.settings.mustBeLoggedIn}</h5>
                     )}

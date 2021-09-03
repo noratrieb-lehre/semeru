@@ -21,23 +21,25 @@ const Stats = () => {
             setTasks(timeForTasksSince(withBreaksArray(collectionToArray(newTasks)), toTimestamp(groupedBy)));
         store.getTasks(listener).catch(error(locale.errors.getTasks));
 
-        return () => void store.removeListener(listener).catch(error(locale.errors.getTasks));
+        return () => {
+            store.removeListener(listener).catch(error(locale.errors.getTasks));
+        };
     }, [locale, error, store, groupedBy]);
 
     return (
         <Container>
-            <Row>
+            <div>
                 {times.map((name) => (
-                    <Col key={name}>
+                    <span className="m-1" key={name}>
                         <Button
                             variant={groupedBy === name ? "secondary" : "outline-secondary"}
                             onClick={() => setGroupedBy(name)}
                         >
                             {locale.stats[name]}
                         </Button>
-                    </Col>
+                    </span>
                 ))}
-            </Row>
+            </div>
             <ListGroup>
                 {tasks.map((task) => (
                     <ListGroupItem key={task.name}>
