@@ -1,15 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ErrorContext, LocaleContext, StoreContext } from "../App";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import {
-    Collection,
-    collectionToArray,
-    CurrentTask,
-    CurrentTaskWB,
-    Task,
-    totalCurrentTaskTime,
-    withBreaks,
-} from "../Task";
+import { Collection, collectionToArray, CurrentTask, CurrentTaskWB, totalCurrentTaskTime, withBreaks } from "../Task";
 import QuickTask, { QTask } from "./QuickTask";
 
 interface TimerPageProps {
@@ -33,7 +25,9 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
     }, [locale, error, store]);
 
     const startHandler = async (name?: string) => {
-        await stopHandler();
+        if (!(await stopHandler())) {
+            return;
+        }
         await store.start(name);
     };
 
@@ -46,13 +40,14 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
     };
 
     const resumeHandler = () => {
+        console.log(task);
         if (!task?.currentBreakStart) {
             return task;
         }
         const breakEnd = Date.now();
-        const next = task && {
+        const next = {
             start: task.start,
-            name: task.name,
+            name: task.name || null,
             breaks: [
                 ...task.breaks,
                 {
@@ -66,7 +61,7 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
         // if we block on break name for a long time, everything is still accounted for correctly, since all timestamps have been saved
         const breakName = window.prompt(locale.timer.enterBreakName);
         if (breakName) {
-            const newTask: Task = {
+            const newTask = {
                 start: task.currentBreakStart,
                 name: breakName,
                 end: breakEnd,
@@ -76,20 +71,22 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
         }
     };
 
-    const stopHandler = async () => {
+    // returns true if the stopping succeeds, and false if it failed
+    const stopHandler = async (): Promise<boolean> => {
         if (!task) {
-            return;
+            return true;
         }
         let name = task.name;
         if (!name) {
             const input = window.prompt(locale.timer.enterLastTaskName);
             if (!input) {
-                return;
+                return false;
             }
             name = input;
         }
         const namedTask = { ...task, name };
         await store.stop(namedTask).catch(error(locale.errors.addTask));
+        return true;
     };
 
     const cancelHandler = async () => {

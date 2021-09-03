@@ -16,7 +16,7 @@ import de from "./locale/de.json";
 import en from "./locale/en2.json";
 import { Alert } from "react-bootstrap";
 
-export type ErrorHandler = (msg: string) => () => void;
+export type ErrorHandler = (msg: string) => (err: any) => void;
 
 type Locale = typeof de;
 type LocaleName = "en" | "de";
@@ -39,8 +39,8 @@ const ErrorContext = React.createContext<ErrorHandler>(() => () => {});
 
 const App = () => {
     const errorHandler = useCallback(
-        (msg: string) => () => {
-            console.error(msg);
+        (msg: string) => (err: any) => {
+            console.error(msg, err);
             setError(msg);
             setTimeout(() => setError(null), 3000);
         },
