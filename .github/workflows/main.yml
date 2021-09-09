@@ -31,8 +31,6 @@ jobs:
 
       - name: Install dependencies
         run: yarn install
-      - name: Build project
-        run: yarn build
       - name: Deploy to pages
         run: yarn deploy -- -u "github-actions-bot <support+actions@github.com>"
         env:
