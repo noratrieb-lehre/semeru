@@ -1,7 +1,10 @@
 ![example workflow](https://github.com/Nilstrieb/semeru/actions/workflows/main.yml/badge.svg)
 
+<div align="center">
 
-[Website](https://nilstrieb.github.io/semeru/)
+[![View site - GH Pages](https://img.shields.io/badge/View_site-GH_Pages-2ea44f?style=for-the-badge)](https://nilstrieb.github.io/semeru/)
+
+</div>
 
 # Info
 
