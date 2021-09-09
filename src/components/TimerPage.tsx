@@ -94,7 +94,7 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
     };
 
     // whether the current task was started from the quick tasks.
-    // note: this does not accurately show whether a name will need to be entered, since the quick task could have been deleted
+    // note: this does not show whether a name will need to be entered, since the quick task could have been deleted
     const anyQuickTaskMatch = !!quickTaskArray.find((qt) => qt === task?.name);
 
     return (
@@ -113,7 +113,7 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
                             {locale.timer.start}
                         </Button>
                         {task?.currentBreakStart ? (
-                            <Button variant="outline-info" className="m-1" onClick={resumeHandler}>
+                            <Button variant="info" className="m-1" onClick={resumeHandler}>
                                 {locale.timer.resume}
                             </Button>
                         ) : (
