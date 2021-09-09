@@ -71,5 +71,9 @@
     "emailAlreadyInUse": "Email already in use",
     "noAccountYet": "Don't have an account?",
     "accountInfo": "You don't need an account to use SEMERU. But using an account will let you sync your timer and tasks across multiple different devices."
+  },
+  "prompt":{
+    "ok": "Ok",
+    "cancel": "Cancel"
   }
 }

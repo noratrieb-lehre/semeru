@@ -71,5 +71,9 @@
     "emailAlreadyInUse": "Email bereits verwendet",
     "noAccountYet": "Noch keinen Account?",
     "accountInfo": "Es braucht keinen Account, um SEMERU nutzen zu können. Mit einem Account kann man jedoch den Timer und die Aufgaben über mehrere Geräte verknüpfen."
+  },
+  "prompt":{
+    "ok": "Ok",
+    "cancel": "Abbrechen"
   }
 }
