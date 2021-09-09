@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.js": "/semeru/static/js/main.d5fda397.chunk.js",
-    "main.js.map": "/semeru/static/js/main.d5fda397.chunk.js.map",
+    "main.js": "/semeru/static/js/main.f819f271.chunk.js",
+    "main.js.map": "/semeru/static/js/main.f819f271.chunk.js.map",
     "runtime-main.js": "/semeru/static/js/runtime-main.c080781f.js",
     "runtime-main.js.map": "/semeru/static/js/runtime-main.c080781f.js.map",
     "static/css/2.818011ed.chunk.css": "/semeru/static/css/2.818011ed.chunk.css",
-    "static/js/2.ee768d5a.chunk.js": "/semeru/static/js/2.ee768d5a.chunk.js",
-    "static/js/2.ee768d5a.chunk.js.map": "/semeru/static/js/2.ee768d5a.chunk.js.map",
+    "static/js/2.646381a6.chunk.js": "/semeru/static/js/2.646381a6.chunk.js",
+    "static/js/2.646381a6.chunk.js.map": "/semeru/static/js/2.646381a6.chunk.js.map",
     "index.html": "/semeru/index.html",
     "static/css/2.818011ed.chunk.css.map": "/semeru/static/css/2.818011ed.chunk.css.map",
-    "static/js/2.ee768d5a.chunk.js.LICENSE.txt": "/semeru/static/js/2.ee768d5a.chunk.js.LICENSE.txt"
+    "static/js/2.646381a6.chunk.js.LICENSE.txt": "/semeru/static/js/2.646381a6.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.c080781f.js",
     "static/css/2.818011ed.chunk.css",
-    "static/js/2.ee768d5a.chunk.js",
-    "static/js/main.d5fda397.chunk.js"
+    "static/js/2.646381a6.chunk.js",
+    "static/js/main.f819f271.chunk.js"
   ]
 }
