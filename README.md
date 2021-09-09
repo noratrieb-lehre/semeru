@@ -1,3 +1,6 @@
+![example workflow](https://github.com/Nilstrieb/semeru/actions/workflows/main.yml/badge.svg)
+
+
 [Website](https://nilstrieb.github.io/semeru/)
 
 # Info
