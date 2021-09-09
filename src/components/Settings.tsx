@@ -8,9 +8,10 @@ interface SettingsProps {
     quickTasks: Collection<QTask>;
     upload: () => void;
     download: () => void;
+    deleteData: () => void;
 }
 
-const Settings: React.FC<SettingsProps> = ({ quickTasks, upload, download }) => {
+const Settings: React.FC<SettingsProps> = ({ quickTasks, upload, download, deleteData }) => {
     const locale = useContext(LocaleContext);
     const user = useContext(UserContext);
     const store = useContext(StoreContext);
@@ -67,14 +68,21 @@ const Settings: React.FC<SettingsProps> = ({ quickTasks, upload, download }) => 
                             <Button variant="outline-primary" onClick={download}>
                                 {locale.settings.download}
                             </Button>
-                            <h5 className="mt-3">{locale.settings.deleteData}</h5>
-                            <Button variant="outline-primary" onClick={download}>
+                            <Button variant="outline-primary" onClick={deleteData}>
                                 {locale.settings.delete}
                             </Button>
                         </Col>
                     ) : (
                         <h5>{locale.settings.mustBeLoggedIn}</h5>
                     )}
+                    <div className="mt-5" />
+                    <h2>{locale.settings.dataManagement}</h2>
+                    <h5>{locale.settings.deleteData}</h5>
+                    <Col>
+                        <Button variant="outline-primary" onClick={deleteData}>
+                            {locale.settings.delete}
+                        </Button>
+                    </Col>
                 </Row>
             </Row>
         </Container>

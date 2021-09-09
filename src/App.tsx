@@ -98,6 +98,7 @@ const App: React.FC = () => {
                                             quickTasks={quickTasks}
                                             upload={() => copyData(globalLocalStore, store)}
                                             download={() => copyData(store, globalLocalStore)}
+                                            deleteData={() => deleteData(store)}
                                         />
                                     </Route>
                                     <Route path="/stats">
@@ -121,6 +122,10 @@ const App: React.FC = () => {
             </HashRouter>
         </div>
     );
+};
+
+const deleteData = async (store: Store) => {
+    await store.clear();
 };
 
 const copyData = async (source: Store, target: Store) => {

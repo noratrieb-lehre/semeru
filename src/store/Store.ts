@@ -31,7 +31,7 @@ export default abstract class Store {
 
     public async clear(): Promise<void> {
         await this.set("tasks", {});
-        await this.set("currentTask", {});
+        await this.set("currentTask", null);
         await this.set("quickTasks", {});
         await this.set("locale", "en");
     }

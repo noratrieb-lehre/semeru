@@ -25,15 +25,12 @@ const SignIn: React.FC = () => {
         [locale]
     );
 
-    const firebaseErrors: { [string: string]: string } = useMemo(
-        () => ({
-            "auth/invalid-email": locale.auth.notAnEmail,
-            "auth/user-disabled": locale.auth.userNotFound,
-            "auth/user-not-found": locale.auth.userNotFound,
-            "auth/wrong-password": locale.auth.incorrectPassword,
-        }),
-        [locale]
-    );
+    const firebaseErrors: { [string: string]: string } = {
+        "auth/invalid-email": locale.auth.notAnEmail,
+        "auth/user-disabled": locale.auth.userNotFound,
+        "auth/user-not-found": locale.auth.userNotFound,
+        "auth/wrong-password": locale.auth.incorrectPassword,
+    };
 
     const onSubmit = (values: FormValues) => {
         setError(null);

@@ -36,7 +36,7 @@ export default class LocalStore extends Store {
     }
 
     protected async push<T>(name: PropertyName, value: T): Promise<void> {
-        const id = `id${Date.now()}_${Math.floor(Math.random() * 1000)}`; // very very cool id
+        const id = generateId();
         const values = await this.getOnce<Collection<T>>(name, {});
         values[id] = value;
         await this.set(name, values);
@@ -46,4 +46,8 @@ export default class LocalStore extends Store {
         this._listeners.push({ value, listener, defaultValue });
         listener(await this.getOnce(value, defaultValue));
     }
+}
+
+function generateId(): string {
+    return `id${Date.now()}_${Math.floor(Math.random() * 1000).toString(16)}`; // very very cool id
 }

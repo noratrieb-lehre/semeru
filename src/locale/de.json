@@ -44,6 +44,7 @@
     "download": "Herunterladen",
     "syncExplain": "Man kann alles lokal speichern, um die App zu nutzen, ohne eingelogged zu sein.",
     "deleteData": "Daten löschen. Kann nicht rückgängig gemacht werden!",
+    "dataManagement": "Daten löschen",
     "delete": "Löschen"
   },
   "stats": {

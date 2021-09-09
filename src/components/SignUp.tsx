@@ -30,14 +30,11 @@ const SignUp: React.FC = () => {
         [locale]
     );
 
-    const firebaseErrors: { [string: string]: string } = useMemo(
-        () => ({
-            "auth/invalid-email": locale.auth.notAnEmail,
-            "auth/email-already-in-use": locale.auth.emailAlreadyInUse,
-            "auth/weak-password": locale.auth.weakPassword,
-        }),
-        [locale]
-    );
+    const firebaseErrors: { [string: string]: string } = {
+        "auth/invalid-email": locale.auth.notAnEmail,
+        "auth/email-already-in-use": locale.auth.emailAlreadyInUse,
+        "auth/weak-password": locale.auth.weakPassword,
+    };
 
     const onSubmit = (values: FormValues) => {
         setError(null);
@@ -72,23 +69,45 @@ const SignUp: React.FC = () => {
                     formik.handleSubmit(e);
                 }}
             >
-                {(["email", "password", "passwordConfirm"] as ["email", "password", "passwordConfirm"]).map(
-                    (fieldName) => (
-                        <Form.Group key={fieldName}>
-                            <Form.Label>{locale.auth[fieldName]}</Form.Label>
-                            <Form.Control
-                                type={fieldName}
-                                name={fieldName}
-                                isInvalid={!!formik.errors[fieldName]}
-                                value={formik.values[fieldName]}
-                                onChange={formik.handleChange}
-                            />
-                            <Alert variant="danger" show={!!formik.errors[fieldName]}>
-                                {formik.errors[fieldName]}
-                            </Alert>
-                        </Form.Group>
-                    )
-                )}
+                <Form.Group>
+                    <Form.Label>{locale.auth.email}</Form.Label>
+                    <Form.Control
+                        type="email"
+                        name="email"
+                        isInvalid={!!formik.errors.email}
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                    />
+                    <Alert variant="danger" show={!!formik.errors.email}>
+                        {formik.errors.email}
+                    </Alert>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>{locale.auth.password}</Form.Label>
+                    <Form.Control
+                        type="password"
+                        name="password"
+                        isInvalid={!!formik.errors.password}
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                    />
+                    <Alert variant="danger" show={!!formik.errors.password}>
+                        {formik.errors.password}
+                    </Alert>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>{locale.auth.passwordConfirm}</Form.Label>
+                    <Form.Control
+                        type="password"
+                        name="passwordConfirm"
+                        isInvalid={!!formik.errors.passwordConfirm}
+                        value={formik.values.passwordConfirm}
+                        onChange={formik.handleChange}
+                    />
+                    <Alert variant="danger" show={!!formik.errors.passwordConfirm}>
+                        {formik.errors.passwordConfirm}
+                    </Alert>
+                </Form.Group>
                 <Button type="submit">{locale.auth.signIn}</Button>
                 <Alert variant="danger" show={!!error}>
                     {error}

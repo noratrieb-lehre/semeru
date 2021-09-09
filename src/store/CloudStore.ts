@@ -6,7 +6,7 @@ type FirebaseListener = (a: firebase.database.DataSnapshot, b?: string | null) =
 export default class CloudStore extends Store {
     _user: firebase.User;
     // we need to map our listeners to firebase listeners, because we cannot use firebase listeners directly,
-    // because the LocalStore cannot call firebase listeners.
+    // because LocalStore cannot call firebase listeners.
     // we need to store the firebase listeners here, because we need to be able to remove them later
     _listenerMap: Map<Listener<any>, { name: PropertyName; listener: FirebaseListener }>;
 
