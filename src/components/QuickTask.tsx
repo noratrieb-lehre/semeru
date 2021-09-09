@@ -9,7 +9,7 @@ interface QuickTaskProps {
     highlight?: boolean;
 }
 
-const QuickTask = ({ highlight, name, handler }: QuickTaskProps) => {
+const QuickTask: React.FC<QuickTaskProps> = ({ highlight, name, handler }) => {
     return (
         <Button onClick={handler} variant={highlight ? "success" : "outline-success"} className="m-1">
             {name}

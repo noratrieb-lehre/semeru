@@ -11,7 +11,7 @@ interface FormValues {
     password: string;
 }
 
-const SignIn = () => {
+const SignIn: React.FC = () => {
     const locale = useContext(LocaleContext);
     const [error, setError] = useState<string | null>(null);
     const history = useHistory();

@@ -12,7 +12,7 @@ interface FormValues {
     passwordConfirm: string;
 }
 
-const SignUp = () => {
+const SignUp: React.FC = () => {
     const locale = useContext(LocaleContext);
     const [error, setError] = useState<string | null>(null);
     const history = useHistory();

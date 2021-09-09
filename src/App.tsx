@@ -37,7 +37,7 @@ const UserContext = React.createContext<firebase.User | null>(null);
 const StoreContext = React.createContext<Store>(globalLocalStore);
 const ErrorContext = React.createContext<ErrorHandler>(() => () => {});
 
-const App = () => {
+const App: React.FC = () => {
     const errorHandler = useCallback(
         (msg: string) => (err: any) => {
             console.error(msg, err);

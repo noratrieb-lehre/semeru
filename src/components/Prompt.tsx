@@ -8,7 +8,7 @@ interface PromptProps {
     onInput: (input: string | null) => void;
 }
 
-const Prompt = ({ show, text, onInput }: PromptProps) => {
+const Prompt: React.FC<PromptProps> = ({ show, text, onInput }) => {
     const locale = useContext(LocaleContext);
 
     const inputRef = useRef<HTMLInputElement>(null);

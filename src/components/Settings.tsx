@@ -10,7 +10,7 @@ interface SettingsProps {
     download: () => void;
 }
 
-const Settings = ({ quickTasks, upload, download }: SettingsProps) => {
+const Settings: React.FC<SettingsProps> = ({ quickTasks, upload, download }) => {
     const locale = useContext(LocaleContext);
     const user = useContext(UserContext);
     const store = useContext(StoreContext);

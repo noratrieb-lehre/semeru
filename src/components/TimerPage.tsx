@@ -8,7 +8,7 @@ interface TimerPageProps {
     quickTasks: Collection<QTask>;
 }
 
-const TimerPage = ({ quickTasks }: TimerPageProps) => {
+const TimerPage: React.FC<TimerPageProps> = ({ quickTasks }) => {
     const locale = useContext(LocaleContext);
     const store = useContext(StoreContext);
     const error = useContext(ErrorContext);
@@ -100,7 +100,7 @@ const TimerPage = ({ quickTasks }: TimerPageProps) => {
     return (
         <Col className="d-grid justify-content-center">
             <Row>
-                {/*<Prompt show onInput={() => {}} text={"halol"} />*/}
+                {/*<Prompt show onInput={() => {}} text={"test"} />*/}
                 <Container className="d-grid justify-content-center">
                     <Timer task={task} />
                 </Container>
@@ -149,7 +149,7 @@ interface TimerProps {
     task: CurrentTaskWB | null;
 }
 
-const Timer = (props: TimerProps) => {
+const Timer: React.FC<TimerProps> = (props) => {
     return (
         <h1 style={{ fontSize: 60 }}>
             <TimerInner {...props} />
@@ -157,7 +157,7 @@ const Timer = (props: TimerProps) => {
     );
 };
 
-const TimerInner = ({ task }: TimerProps) => {
+const TimerInner: React.FC<TimerProps> = ({ task }) => {
     const [, setRefresh] = useState(0);
 
     useEffect(() => {

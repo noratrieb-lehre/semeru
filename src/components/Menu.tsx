@@ -8,7 +8,7 @@ interface MenuProps {
     changeLocale: (name: LocaleName) => void;
 }
 
-const Menu = ({ changeLocale }: MenuProps) => {
+const Menu: React.FC<MenuProps> = ({ changeLocale }) => {
     const locale = useContext(LocaleContext);
     const user = useContext(UserContext);
 

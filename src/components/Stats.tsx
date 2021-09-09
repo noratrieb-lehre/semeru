@@ -7,7 +7,7 @@ type Time = "day" | "week" | "month" | "all";
 
 const times: Time[] = ["day", "week", "month", "all"];
 
-const Stats = () => {
+const Stats: React.FC = () => {
     const locale = useContext(LocaleContext);
     const store = useContext(StoreContext);
     const error = useContext(ErrorContext);
