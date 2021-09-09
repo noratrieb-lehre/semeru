@@ -13,3 +13,4 @@ SEMERU mit Firebase ist komplett real-time, heisst *jegliche* Änderung wird sof
 Jeder getter im Store returned keinen value, sondern nur einen `Promise<void>`. Er nimmt aber ein Callback an, was er
 direkt an einen Firebase-/LocalStorage Listener weiterleitet. So wird das Callback direkt aufgerufen, und dann auch bei
 jeder neuen Änderung.
+
