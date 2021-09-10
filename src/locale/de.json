@@ -1,80 +1,80 @@
 {
-  "name": "de",
-  "test": {
-    "greeting": "hallo"
-  },
-  "errors": {
-    "removeQuickTask": "Konnte Schnelltask nicht löschen",
-    "addQuickTask": "Konnte Schnelltask nicht hinzufügen",
-    "getTasks": "Konnte Tasks nicht laden",
-    "getCurrentTask": "Konnte die aktuelle Task nicht laden",
-    "updateCurrentTask": "Konnte die aktuelle Task nicht speichern",
-    "getQuickTasks": "Konnte Schnelltasks nicht laden",
-    "setLocale": "Konnte Spracheinstellungen nicht speichern",
-    "addTask": "Konnte Task nicht speichern"
-  },
-  "root": {
-    "timerPage": "Timer",
-    "settingsPage": "Optionen",
-    "dataPage": "Statistiken",
-    "languages": {
-      "de": "Deutsch",
-      "en": "Englisch",
-      "title": "Deutsch"
+    "name": "de",
+    "test": {
+        "greeting": "hallo"
+    },
+    "errors": {
+        "removeQuickTask": "Konnte Schnelltask nicht löschen",
+        "addQuickTask": "Konnte Schnelltask nicht hinzufügen",
+        "getTasks": "Konnte Tasks nicht laden",
+        "getCurrentTask": "Konnte die aktuelle Task nicht laden",
+        "updateCurrentTask": "Konnte die aktuelle Task nicht speichern",
+        "getQuickTasks": "Konnte Schnelltasks nicht laden",
+        "setLocale": "Konnte Spracheinstellungen nicht speichern",
+        "addTask": "Konnte Task nicht speichern"
+    },
+    "root": {
+        "timerPage": "Timer",
+        "settingsPage": "Optionen",
+        "dataPage": "Statistiken",
+        "languages": {
+            "de": "Deutsch",
+            "en": "Englisch",
+            "title": "Deutsch"
+        }
+    },
+    "timer": {
+        "start": "Start",
+        "pause": "Pause",
+        "resume": "Weiter",
+        "stop": "Stopp",
+        "cancel": "Abbrechen",
+        "enterLastTaskName": "Name der letzten Aufgabe eingeben:",
+        "enterBreakName": "Task während der Pause eingeben (leer für keine):"
+    },
+    "settings": {
+        "quickTasks": "Schnelltasks",
+        "new": "Neu",
+        "newTaskMessage": "Aufgabenname eingeben",
+        "synchronizeTitle": "Mit der Cloud synchronosieren",
+        "mustBeLoggedIn": "Du musst eingeogged sein, um diese Funktion zu benutzen",
+        "fromLtoC": "Von Lokal zur Cloud",
+        "fromCtoL": "Von der Cloud zu Lokal",
+        "upload": "Hochladen",
+        "download": "Herunterladen",
+        "syncExplain": "Man kann alles lokal speichern, um die App zu nutzen, ohne eingelogged zu sein.",
+        "deleteData": "Daten löschen. Kann nicht rückgängig gemacht werden!",
+        "dataManagement": "Daten löschen",
+        "delete": "Löschen"
+    },
+    "stats": {
+        "day": "Tag",
+        "week": "Woche",
+        "month": "Monat",
+        "all": "Alle"
+    },
+    "auth": {
+        "signIn": "Login",
+        "signUp": "Registrieren",
+        "signOut": "Ausloggen",
+        "email": "E-Mail",
+        "password": "Passwort",
+        "passwordConfirm": "Passwort bestätigen",
+        "incorrectPassword": "Falsches Passwort",
+        "incorrectEmail": "Falsche E-Mail",
+        "passwordReq": "Passwort benötigt",
+        "emailReq": "E-Mail benötigt",
+        "notAnEmail": "Keine E-Mail Adresse",
+        "userNotFound": "E-Mail nicht gefunden",
+        "passwordMustMatch": "Passwörter müssen übereinstimmten",
+        "passwordLength": "Passwort muss mindestens 6 Zeichen lang sein",
+        "weakPassword": "Passwort zu schwach",
+        "emailAlreadyInUse": "Email bereits verwendet",
+        "noAccountYet": "Noch keinen Account?",
+        "accountInfo": "Es braucht keinen Account, um SEMERU nutzen zu können. Mit einem Account kann man jedoch den Timer und die Aufgaben über mehrere Geräte verknüpfen."
+    },
+    "prompt": {
+        "ok": "Ok",
+        "cancel": "Abbrechen"
     }
-  },
-  "timer": {
-    "start": "Start",
-    "pause": "Pause",
-    "resume": "Weiter",
-    "stop": "Stopp",
-    "cancel": "Abbrechen",
-    "enterLastTaskName": "Name der letzten Aufgabe eingeben:",
-    "enterBreakName": "Task während der Pause eingeben (leer für keine):"
-  },
-  "settings": {
-    "quickTasks": "Schnelltasks",
-    "new": "Neu",
-    "newTaskMessage": "Aufgabenname eingeben",
-    "synchronizeTitle": "Mit der Cloud synchronosieren",
-    "mustBeLoggedIn": "Du musst eingeogged sein, um diese Funktion zu benutzen",
-    "fromLtoC": "Von Lokal zur Cloud",
-    "fromCtoL": "Von der Cloud zu Lokal",
-    "upload": "Hochladen",
-    "download": "Herunterladen",
-    "syncExplain": "Man kann alles lokal speichern, um die App zu nutzen, ohne eingelogged zu sein.",
-    "deleteData": "Daten löschen. Kann nicht rückgängig gemacht werden!",
-    "dataManagement": "Daten löschen",
-    "delete": "Löschen"
-  },
-  "stats": {
-    "day": "Tag",
-    "week": "Woche",
-    "month": "Monat",
-    "all": "Alle"
-  },
-  "auth": {
-    "signIn": "Login",
-    "signUp": "Registrieren",
-    "signOut": "Ausloggen",
-    "email": "E-Mail",
-    "password": "Passwort",
-    "passwordConfirm": "Passwort bestätigen",
-    "incorrectPassword": "Falsches Passwort",
-    "incorrectEmail": "Falsche E-Mail",
-    "passwordReq": "Passwort benötigt",
-    "emailReq": "E-Mail benötigt",
-    "notAnEmail": "Keine E-Mail Adresse",
-    "userNotFound": "E-Mail nicht gefunden",
-    "passwordMustMatch": "Passwörter müssen übereinstimmten",
-    "passwordLength": "Passwort muss mindestens 6 Zeichen lang sein",
-    "weakPassword": "Passwort zu schwach",
-    "emailAlreadyInUse": "Email bereits verwendet",
-    "noAccountYet": "Noch keinen Account?",
-    "accountInfo": "Es braucht keinen Account, um SEMERU nutzen zu können. Mit einem Account kann man jedoch den Timer und die Aufgaben über mehrere Geräte verknüpfen."
-  },
-  "prompt":{
-    "ok": "Ok",
-    "cancel": "Abbrechen"
-  }
 }

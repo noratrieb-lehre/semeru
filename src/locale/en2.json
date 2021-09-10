@@ -1,80 +1,80 @@
 {
-  "name": "en",
-  "test": {
-    "greeting": "hi"
-  },
-  "errors": {
-    "removeQuickTask": "Failed to remove quick task",
-    "addQuickTask": "Failed to add quick task",
-    "getTasks": "Failed to fetch tasks",
-    "getCurrentTask": "Failed to fetch current task",
-    "updateCurrentTask": "Failed to update current task",
-    "getQuickTasks": "Failed to fetch quick tasks",
-    "setLocale": "Failed to save language settings",
-    "addTask": "Failed to save task"
-  },
-  "root": {
-    "timerPage": "Timer",
-    "settingsPage": "Settings",
-    "dataPage": "Stats",
-    "languages": {
-      "de": "German",
-      "en": "English",
-      "title": "Language"
+    "name": "en",
+    "test": {
+        "greeting": "hi"
+    },
+    "errors": {
+        "removeQuickTask": "Failed to remove quick task",
+        "addQuickTask": "Failed to add quick task",
+        "getTasks": "Failed to fetch tasks",
+        "getCurrentTask": "Failed to fetch current task",
+        "updateCurrentTask": "Failed to update current task",
+        "getQuickTasks": "Failed to fetch quick tasks",
+        "setLocale": "Failed to save language settings",
+        "addTask": "Failed to save task"
+    },
+    "root": {
+        "timerPage": "Timer",
+        "settingsPage": "Settings",
+        "dataPage": "Stats",
+        "languages": {
+            "de": "German",
+            "en": "English",
+            "title": "Language"
+        }
+    },
+    "timer": {
+        "start": "Start",
+        "pause": "Pause",
+        "resume": "Resume",
+        "stop": "Stop",
+        "cancel": "Cancel",
+        "enterLastTaskName": "Enter name for the last task:",
+        "enterBreakName": "Enter the task during the break (empty for nothing):"
+    },
+    "settings": {
+        "quickTasks": "Quick Tasks",
+        "new": "New",
+        "newTaskMessage": "Enter task name",
+        "synchronizeTitle": "Synchronize with the cloud",
+        "mustBeLoggedIn": "You must be logged in to use this feature",
+        "fromLtoC": "From local data to the cloud",
+        "fromCtoL": "From the cloud to local",
+        "upload": "Upload",
+        "download": "Download",
+        "syncExplain": "You can save everything locally, so you can continue to use the app even if you are not logged in.",
+        "deleteData": "Delete data. This can not be undone!",
+        "dataManagement": "Delete Data",
+        "delete": "Delete"
+    },
+    "stats": {
+        "day": "Day",
+        "week": "Week",
+        "month": "Month",
+        "all": "All"
+    },
+    "auth": {
+        "signIn": "Sign In",
+        "signUp": "Sign Up",
+        "signOut": "Sign Out",
+        "email": "E-Mail",
+        "password": "Password",
+        "passwordConfirm": "Confirm Password",
+        "incorrectPassword": "Incorrect password",
+        "incorrectEmail": "Incorrect e-mail",
+        "passwordReq": "Password is required",
+        "emailReq": "E-Mail is required",
+        "notAnEmail": "Not an E-Mail address",
+        "userNotFound": "E-Mail not found",
+        "passwordMustMatch": "Passwords must match",
+        "passwordLength": "Password must be at least 6 characters",
+        "weakPassword": "Password too weak",
+        "emailAlreadyInUse": "Email already in use",
+        "noAccountYet": "Don't have an account?",
+        "accountInfo": "You don't need an account to use SEMERU. But using an account will let you sync your timer and tasks across multiple different devices."
+    },
+    "prompt": {
+        "ok": "Ok",
+        "cancel": "Cancel"
     }
-  },
-  "timer": {
-    "start": "Start",
-    "pause": "Pause",
-    "resume": "Resume",
-    "stop": "Stop",
-    "cancel": "Cancel",
-    "enterLastTaskName": "Enter name for the last task:",
-    "enterBreakName": "Enter the task during the break (empty for nothing):"
-  },
-  "settings": {
-    "quickTasks": "Quick Tasks",
-    "new": "New",
-    "newTaskMessage": "Enter task name",
-    "synchronizeTitle": "Synchronize with the cloud",
-    "mustBeLoggedIn": "You must be logged in to use this feature",
-    "fromLtoC": "From local data to the cloud",
-    "fromCtoL": "From the cloud to local",
-    "upload": "Upload",
-    "download": "Download",
-    "syncExplain": "You can save everything locally, so you can continue to use the app even if you are not logged in.",
-    "deleteData": "Delete data. This can not be undone!",
-    "dataManagement": "Delete Data",
-    "delete": "Delete"
-  },
-  "stats": {
-    "day": "Day",
-    "week": "Week",
-    "month": "Month",
-    "all": "All"
-  },
-  "auth": {
-    "signIn": "Sign In",
-    "signUp": "Sign Up",
-    "signOut": "Sign Out",
-    "email": "E-Mail",
-    "password": "Password",
-    "passwordConfirm": "Confirm Password",
-    "incorrectPassword": "Incorrect password",
-    "incorrectEmail": "Incorrect e-mail",
-    "passwordReq": "Password is required",
-    "emailReq": "E-Mail is required",
-    "notAnEmail": "Not an E-Mail address",
-    "userNotFound": "E-Mail not found",
-    "passwordMustMatch": "Passwords must match",
-    "passwordLength": "Password must be at least 6 characters",
-    "weakPassword": "Password too weak",
-    "emailAlreadyInUse": "Email already in use",
-    "noAccountYet": "Don't have an account?",
-    "accountInfo": "You don't need an account to use SEMERU. But using an account will let you sync your timer and tasks across multiple different devices."
-  },
-  "prompt":{
-    "ok": "Ok",
-    "cancel": "Cancel"
-  }
 }
