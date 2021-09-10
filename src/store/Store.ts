@@ -1,4 +1,4 @@
-import { Collection, CurrentTask, Task } from "../Task";
+import { Collection, collectionToArray, CurrentTask, Task } from "../Task";
 import { QTask } from "../components/QuickTask";
 import { LocaleName } from "../App";
 
@@ -70,6 +70,10 @@ export default abstract class Store {
 
     public getCurrentTask(listener: Listener<CurrentTask | null>): Promise<void> {
         return this.get("currentTask", null, listener);
+    }
+
+    public async pushAll<T>(name: PropertyName, value: Collection<T>): Promise<void> {
+        collectionToArray(value).forEach((v) => this.push(name, v));
     }
 
     public abstract removeQuickTask(id: string): Promise<void>;

@@ -11,7 +11,7 @@ import SignUp from "./components/SignUp";
 import Store from "./store/Store";
 import LocalStore from "./store/LocalStore";
 import CloudStore from "./store/CloudStore";
-import { Collection, collectionToArray, CurrentTask, Task } from "./Task";
+import { Collection, CurrentTask, Task } from "./Task";
 import de from "./locale/de.json";
 import en from "./locale/en2.json";
 import { Alert } from "react-bootstrap";
@@ -129,15 +129,15 @@ const deleteData = async (store: Store) => {
 };
 
 const copyData = async (source: Store, target: Store) => {
-    await source
-        .getOnce<Collection<Task>>("tasks", {})
-        .then((tasks) => collectionToArray(tasks).forEach((task) => target.addTask(task)));
+    await target.clear();
+
+    await source.getOnce<Collection<Task>>("tasks", {}).then((tasks) => target.pushAll("tasks", tasks));
 
     await source.getOnce<LocaleName>("locale", "en").then((locale) => target.setLocale(locale));
 
-    await source
-        .getOnce<Collection<QTask>>("quickTasks", {})
-        .then((quickTasks) => collectionToArray(quickTasks).forEach((quickTask) => target.addQuickTask(quickTask)));
+    await source.getOnce<Collection<QTask>>("quickTasks", {}).then((quickTasks) => {
+        target.pushAll("quickTasks", quickTasks);
+    });
 
     await source
         .getOnce<CurrentTask | null>("currentTask", null)

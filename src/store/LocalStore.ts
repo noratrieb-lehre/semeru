@@ -31,8 +31,10 @@ export default class LocalStore extends Store {
         this._listeners = this._listeners.filter(({ listener }) => listener !== toRemove);
     }
 
-    public pushAll<T>(name: PropertyName, value: Collection<T>) {
-        this.set(name, collectionToArray(value)).then();
+    public async pushAll<T>(name: PropertyName, newValues: Collection<T>) {
+        for (const value of collectionToArray(newValues)) {
+            await this.push(name, value);
+        }
     }
 
     protected async push<T>(name: PropertyName, value: T): Promise<void> {
