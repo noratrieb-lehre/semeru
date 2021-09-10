@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/semeru/static/js/main.9f817572.chunk.js",
-    "main.js.map": "/semeru/static/js/main.9f817572.chunk.js.map",
+    "main.js": "/semeru/static/js/main.3c4557df.chunk.js",
+    "main.js.map": "/semeru/static/js/main.3c4557df.chunk.js.map",
     "runtime-main.js": "/semeru/static/js/runtime-main.c080781f.js",
     "runtime-main.js.map": "/semeru/static/js/runtime-main.c080781f.js.map",
     "static/css/2.818011ed.chunk.css": "/semeru/static/css/2.818011ed.chunk.css",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.c080781f.js",
     "static/css/2.818011ed.chunk.css",
     "static/js/2.646381a6.chunk.js",
-    "static/js/main.9f817572.chunk.js"
+    "static/js/main.3c4557df.chunk.js"
   ]
 }
