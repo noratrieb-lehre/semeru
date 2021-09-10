@@ -18,4 +18,4 @@
 </div>
 
 A real-time time tracking system built with React TS and Firebase. Use SEMERU without an account or
-create a free account to sync your time across multiple devices in real-time!
+create a free account to sync your time across multiple devices in real-time! 
