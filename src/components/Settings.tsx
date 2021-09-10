@@ -68,9 +68,6 @@ const Settings: React.FC<SettingsProps> = ({ quickTasks, upload, download, delet
                             <Button variant="outline-primary" onClick={download}>
                                 {locale.settings.download}
                             </Button>
-                            <Button variant="outline-primary" onClick={deleteData}>
-                                {locale.settings.delete}
-                            </Button>
                         </Col>
                     ) : (
                         <h5>{locale.settings.mustBeLoggedIn}</h5>
